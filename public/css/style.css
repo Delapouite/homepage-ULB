@@ -110,6 +110,12 @@ body > div > nav > ul > li > a:hover {
     color: #FDFDFD;
 }
 
+/* skill content */
+body > div > main > section > skill > ul {
+    list-style-type: none;
+    font-size: large;
+    color: #A0A0A0;
+}
 
 /* Footer */
 body > div > footer {
@@ -183,4 +189,17 @@ main > section > p {
     }
 
     body > div > header > h1 { position: relative; }
+}
+
+/*********
+* Image  *
+**********/
+
+.roundedImage{
+    overflow:hidden;
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;
+    width:90px;
+    height:90px;
 }
