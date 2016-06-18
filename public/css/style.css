@@ -208,6 +208,10 @@ div.float p {
     text-align: left;
 }
 
+div.spacer {
+    clear: both;
+}
+
 main > section > ul > li > div {
     width: 100px;
     height: 200px;
