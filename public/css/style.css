@@ -46,7 +46,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body > div {
-    /*background-color: #333;*/
     background-color: #010E1E;
     margin: 0 auto;
     max-width: 800px;
@@ -56,7 +55,6 @@ body > div {
 
 /* Header */
 body > div > header {
-    /*background: url("../img/header.jpg") no-repeat left center;*/
     background: url("../img/source-code_blog.jpg") no-repeat left center;
     width: 800px;
     height: 250px;
@@ -105,7 +103,6 @@ body > div > nav > ul > li > a {
 }
 
 body > div > nav > ul > li > a:hover {
-    /*background-color: #6A7919;*/
     background-color: #007398;
     color: #FDFDFD;
 }
@@ -116,6 +113,7 @@ body > div > main > section > skill > ul {
     font-size: large;
     color: #A0A0A0;
 }
+
 
 /* Footer */
 body > div > footer {
@@ -195,11 +193,22 @@ main > section > p {
 * Image  *
 **********/
 
-.roundedImage{
-    overflow:hidden;
-    -webkit-border-radius:50px;
-    -moz-border-radius:50px;
-    border-radius:50px;
-    width:90px;
-    height:90px;
+.title {
+    font-size: larger;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+}
+
+div.float {
+    float: left;
+}
+
+div.float p {
+    text-align: left;
+}
+
+main > section > ul > li > div {
+    width: 100px;
+    height: 200px;
 }
