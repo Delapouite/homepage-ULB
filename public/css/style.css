@@ -31,7 +31,13 @@ section {
 
 .surname { font-variant: small-caps; }
 
+.vertical-bottom { vertical-align: bottom; }
+.vertical-middle { vertical-align: middle; }
+.vertical-top { vertical-align: top; }
 
+.left { float: left;  }
+.left p { text-align: left;  }
+.spacer {  clear: both;  }
 
 /*********
  * Style *
@@ -46,6 +52,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body > div {
+    /*background-color: #333;*/
     background-color: #010E1E;
     margin: 0 auto;
     max-width: 800px;
@@ -55,10 +62,10 @@ body > div {
 
 /* Header */
 body > div > header {
+    /*background: url("../img/header.jpg") no-repeat left center;*/
     background: url("../img/source-code_blog.jpg") no-repeat left center;
-    width: 800px;
     height: 250px;
-    border:solid black 1px;
+    border: 1px solid black;
     position: relative;
 }
 
@@ -99,19 +106,14 @@ body > div > nav > ul > li > a {
     line-height: 6ex;
     padding: 0 20px;
     text-decoration: none;
+    transition: background-color 0.5s;
     vertical-align: middle;
 }
 
 body > div > nav > ul > li > a:hover {
+    /*background-color: #6A7919;*/
     background-color: #007398;
     color: #FDFDFD;
-}
-
-/* skill content */
-body > div > main > section > ul {
-    list-style-type: none;
-    font-size: large;
-    color: #A0A0A0;
 }
 
 
@@ -155,6 +157,42 @@ main > section > p {
     text-align: justify;
 }
 
+main > section ul { padding-left: 1em; }
+
+
+/* Skills content */
+main > section > ul.skills {
+    color: #A0A0A0;
+    font-size: large;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+main > section > ul.skills > li { margin-bottom: 2ex; }
+
+main > section > ul.skills > li > h3 {
+    font-size: inherit;
+    font-weight: normal;
+}
+
+main > section > ul.skills > li ul {
+    color: black;
+    list-style-type: none;
+}
+
+main > section > ul.skills > li > ul > div.left {
+    width: 100px;
+    height: 100px;
+}
+
+/*********
+ * Image  *
+ **********/
+.rounded-image {
+    border-radius: 50px;
+    height: 50px;
+    width: 50px;
+}
 
 
 /**************
@@ -187,32 +225,4 @@ main > section > p {
     }
 
     body > div > header > h1 { position: relative; }
-}
-
-/*********
-* Image  *
-**********/
-
-.title {
-    font-size: larger;
-    font-weight: bold;
-    display: block;
-    text-align: left;
-}
-
-div.float {
-    float: left;
-}
-
-div.float p {
-    text-align: left;
-}
-
-div.spacer {
-    clear: both;
-}
-
-main > section > ul > li > div {
-    width: 100px;
-    height: 200px;
 }
