@@ -108,7 +108,7 @@ body > div > nav > ul > li > a:hover {
 }
 
 /* skill content */
-body > div > main > section > skill > ul {
+body > div > main > section > ul {
     list-style-type: none;
     font-size: large;
     color: #A0A0A0;
