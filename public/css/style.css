@@ -37,7 +37,6 @@ section {
 
 .left { float: left;  }
 .left p { text-align: left;  }
-.spacer {  clear: both;  }
 
 /*********
  * Style *
@@ -52,17 +51,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body > div {
-    /*background-color: #333;*/
     background-color: #010E1E;
     margin: 0 auto;
     max-width: 800px;
     padding: 20px 25px 0;
 }
 
+/* links */
+a {
+    text-decoration:none;
+    color: #00142D;
+    font-weight: bold;
+}
+a:hover {  color: #244559;  }
+
 
 /* Header */
 body > div > header {
-    /*background: url("../img/header.jpg") no-repeat left center;*/
     background: url("../img/source-code_blog.jpg") no-repeat left center;
     height: 250px;
     border: 1px solid black;
@@ -111,7 +116,6 @@ body > div > nav > ul > li > a {
 }
 
 body > div > nav > ul > li > a:hover {
-    /*background-color: #6A7919;*/
     background-color: #007398;
     color: #FDFDFD;
 }
@@ -185,11 +189,11 @@ main > section > ul.skills > li > ul > div.left {
     height: 100px;
 }
 
-main > section > ul.skills > li > ul > div.left > a {
-    text-decoration:none;
-    color: #00142D;
-    font-weight: bold;
-}
+/*main > section > ul.skills > li > ul > div.left > a {*/
+    /*text-decoration:none;*/
+    /*color: #00142D;*/
+    /*font-weight: bold;*/
+/*}*/
 
 /*********
  * Image  *
