@@ -184,7 +184,7 @@ main > section > ul.skills > li ul {
     list-style-type: none;
 }
 
-main > section > ul.skills > li > ul > div.left {
+main > section > ul.skills > li > ul > li > div.left {
     width: 100px;
     height: 100px;
 }
