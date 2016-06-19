@@ -179,7 +179,7 @@ main > section > ul.skills > li > h3 {
     font-weight: normal;
 }
 
-main > section > ul.skills > li ul {
+li {
     color: black;
     list-style-type: none;
 }
