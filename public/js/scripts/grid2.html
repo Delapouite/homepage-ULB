@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grid</title>
+    <link rel="stylesheet" type="text/css" href="./../../../public/css/style.css">
+    <script>
+        function start() {
+            // récupère une référence vers l'élément body
+            var body = document.getElementsByTagName("body")[0];
+
+            // créé un élément div
+            div = document.createElement("div");
+            div.setAttribute("id", "grid"); // set l'id à grid
+            body.appendChild(div);
+
+            // crée un élément <table> et un élément <tbody>
+            table     = document.createElement("table");
+            tablebody = document.createElement("tbody");
+
+            // création des cellules
+            for(var j = 0; j < 10; j++) {
+                // crée une ligne de tableau
+                var row = document.createElement("tr");
+
+                for(var i = 0; i < 10; i++) {
+                    // Crée un élément <td> et un nœud texte, place le nœud texte
+                    // comme contenu texte de l'élément <td> et le place à la fin
+                    // de la ligne du tableau
+                    cell = document.createElement("td");
+                    texte = document.createTextNode(i + "" + j);
+                    cell.appendChild(texte);
+                    row.appendChild(cell);
+                }
+                // ajoute la ligne à la fin du corps du tableau
+                tablebody.appendChild(row);
+            }
+            // place <tbody> dans l'élément <table>
+            table.appendChild(tablebody);
+            // ajoute <table> à l'élément <body>
+            div.appendChild(table);
+            // définit l'attribut border du tableau à 2
+            table.setAttribute("border", "2");
+        }
+    </script></head>
+
+<body onload="start();">
+</body>
+</html>
