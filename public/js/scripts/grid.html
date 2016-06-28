@@ -4,82 +4,8 @@
     <meta charset="UTF-8">
     <title>Grid</title>
     <link rel="stylesheet" type="text/css" href="./../../../public/css/style.css">
-    <script>
-        var cols = 10;
-        var rows = 10;
-
-        function start() {
-            // récupère une référence vers l'élément body
-            var body = document.getElementsByTagName("body")[0];
-
-            // créé un élément div
-            div = document.createElement("div");
-            div.setAttribute("id", "grid"); // set l'id à grid
-            body.appendChild(div);
-
-            // add le labelCol
-            labelCol = document.createElement("label");
-            labelCol.setAttribute("name", "cols");
-            body.appendChild(labelCol);
-
-            // add le input number
-            inputcol = document.createElement("input");
-            inputcol.setAttribute("type", "number");
-
-
-            <labelCol name="cols">Columns</labelCol><input type="number" min="1" max="100">
-                    <labelCol name="rows">Rows</labelCol><input type="number" min="1" max="100">
-
-
-            // crée un élément <table> et un élément <tbody>
-            table     = document.createElement("table");
-            tablebody = document.createElement("tbody");
-
-            // création des cellules
-            for(var j = 0; j < cols; j++) {
-                // crée une ligne de tableau
-                var row = document.createElement("tr");
-
-                for(var i = 0; i < rows; i++) {
-                    // Crée un élément <td> et un nœud texte, place le nœud texte
-                    // comme contenu texte de l'élément <td> et le place à la fin
-                    // de la ligne du tableau
-                    cell = document.createElement("td");
-                    button = document.createElement("input");
-                    button.setAttribute("type", "button");
-                    button.setAttribute("onclick", "modif(" + i + ", " + j + ");");
-                    button.setAttribute("id", "_"+i+"_"+j);
-                    button.setAttribute("class", "off");
-                    cell.appendChild(button);
-                    row.appendChild(cell);
-                }
-                // ajoute la ligne à la fin du corps du tableau
-                tablebody.appendChild(row);
-            }
-            // place <tbody> dans l'élément <table>
-            table.appendChild(tablebody);
-            // ajoute <table> à l'élément <body>
-            div.appendChild(table);
-            // définit l'attribut border du tableau à 2
-            table.setAttribute("border", "2");
-        }
-
-        function modif(i, j) {
-            elem = document.getElementById("_"+i+"_"+j);
-            state = elem.getAttribute("class");
-            if(state == "off"){
-                elem.setAttribute("class", "on");
-            } else {
-                elem.setAttribute("class", "off");
-            }
-        }
-
-        function configInput(input){
-            input.setAttribute()
-        }
-
-
-    </script></head>
+    <script src="grid.js"></script>
+</head>
 
 <body onload="start();">
 </body>
