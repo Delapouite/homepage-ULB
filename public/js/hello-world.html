@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World !</title>
+</head>
+<body>
+<h1>Tentative de grille</h1>
+<input type="text" id="number">
+<input type="submit" onclick="disp();" onsubmit="disp();" >
+<script src="jquery-3.0.0.js"></script>
+<script>
+    $(function() {
+        $('div:hidden').show();
+        //Le code jQuery sera inséré ici
+    });
+
+    function disp() {
+        var number = $('#number').val();
+        alert(number);
+    }
+</script>
+</body>
+</html>
+
+

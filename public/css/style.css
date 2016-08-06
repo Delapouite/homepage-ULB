@@ -230,3 +230,41 @@ main > section > ul.skills > li > ul > li > div.left {
 
     body > div > header > h1 { position: relative; }
 }
+
+
+/********
+* grid  *
+*********/
+
+#grid table {
+    background-color: white;
+}
+
+#grid td > tr {
+    /*border: 1px solid black;*/
+    text-align: center;
+
+}
+
+/* style des cellules */
+body > div > table > tbody > tr > td > input {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+body > div > form > input {
+    width: 40px;
+    height: 20px;
+}
+
+#grid {
+    color: white;
+}
+
+.off {
+    background-color: black;
+}
+.on{
+    background-color: white;
+}
