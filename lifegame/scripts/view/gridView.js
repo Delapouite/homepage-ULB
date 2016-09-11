@@ -48,13 +48,10 @@ function inverseCell(MyVars, event) {
     } else { // ff method
         console.log("ff method");
         var rect = canvas.getBoundingClientRect();
-        x = event.clientX - rect.left + document.body.scrollLeft + document.documentElement.scrollLeft;
-        y = event.clientY - rect.top + document.body.scrollTop + document.documentElement.scrollTop;
+        x = event.clientX - rect.left;
+        y = event.clientY - rect.top;
     }
-    // là, il faut convertir ces coordonnées, puis envoyer le signal awake au controller
-    x = Math.floor(x/cellSize);
-    y = Math.floor(y/cellSize);
-    MyVars.controller.inverse(x, y);
+    MyVars.controller.inverse(Math.floor(x/cellSize), Math.floor(y/cellSize));
 }
 
 
@@ -64,20 +61,16 @@ GridView.prototype.drawOne = function (x, y, ctx) {
     } else {
         ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
-    // ici, en cas d'update, il n'est pas nécessaire de repasser toute la grille en revue.
-    // Le premier coup, ok. Mais ensuite, seules les cellules modifièes doivent être updated.
-    // or celles-ci ne peuvent l'être qu'à proximité des cell alive.
-    // nécessité de dev deux méthodes différentes.
 };
 
 GridView.prototype.awake = function (x, y, ctx) {
-    console.log("awake " + y + ":" + x);
+    // console.log("awake " + y + ":" + x);
     ctx.fillStyle = colors.alive;
     ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
 };
 
 GridView.prototype.asleep = function (x, y, ctx) {
-    console.log("asleep" + y + ":" + x);
+    // console.log("asleep" + y + ":" + x);
     ctx.fillStyle = colors.dead;
     ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
     ctx.fillStyle= colors.alive;
