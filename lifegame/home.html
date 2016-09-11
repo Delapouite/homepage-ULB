@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Jeu de la vie</title>
+    <script src="scripts/model/gridModel.js"></script>
+    <script src="scripts/view/gridView.js"></script>
+    <script src="scripts/controller/gridController.js"></script>
+    <script src="scripts/main.js"></script>
+    <style type="text/css">
+        canvas { border: 1px solid black; }
+    </style>
+</head>
+<body onload="main();">
+<form name="paramForm">
+    <label for="rows">Rows</label>
+    <input type="number" min="1" size="3" name="rows" id="rows" value="10">
+    <label for="cols">Cols</label>
+    <input type="number" min="1" size="3" name="cols" id="cols" value="10">
+    <input type="button" value="change" onclick="changeParams(paramForm)">
+</form>
+<br>
+<span id="can"></span>
+<br>
+<form name="gapForm">
+    <label for="steps">steps</label>
+    <input type="number" min="1" size="3" name="steps" id="steps" value="1">
+    <input type="button" value=" > " onclick="forward(gapForm)">
+</form>
+</body>
+</html>
