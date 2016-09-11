@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="???">
+    <meta name="keywords" content="???">
+
+    <link rel="stylesheet" type="text/css" href="./../public/css/style.css">
+
     <meta charset="utf-8"/>
     <title>Jeu de la vie</title>
     <script src="scripts/model/gridModel.js"></script>
@@ -8,24 +15,42 @@
     <script src="scripts/controller/gridController.js"></script>
     <script src="scripts/main.js"></script>
     <style type="text/css">
-        canvas { border: 1px solid black; }
+        canvas { border: 1px solid red; }
     </style>
 </head>
 <body onload="main();">
-<form name="paramForm">
-    <label for="rows">Rows</label>
-    <input type="number" min="1" size="3" name="rows" id="rows" value="10">
-    <label for="cols">Cols</label>
-    <input type="number" min="1" size="3" name="cols" id="cols" value="10">
-    <input type="button" value="change" onclick="changeParams(paramForm)">
-</form>
-<br>
-<span id="can"></span>
-<br>
-<form name="gapForm">
-    <label for="steps">steps</label>
-    <input type="number" min="1" size="3" name="steps" id="steps" value="1">
-    <input type="button" value=" > " onclick="forward(gapForm)">
-</form>
+
+<div>
+    <header>
+        <h1><a href="http://student.ulb.ac.be/~abrayer/">Arabella <span class="surname">Brayer</span></a></h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="./../index.html">home</a></li>
+            <li><a href="./../skills.html">skills</a></li>
+            <li><a href="./../interests.html">interests</a></li>
+            <li><a href="./../news.html">news</a></li>
+            <li><a href="./../contact.html">contact</a></li>
+            <li><a href="./../links.html">links</a></li>
+        </ul>
+    </nav>
+    <main>
+        <form name="paramForm">
+            <label for="rows">Rows</label>
+            <input type="number" min="1" size="3" name="rows" id="rows" value="10">
+            <label for="cols">Cols</label>
+            <input type="number" min="1" size="3" name="cols" id="cols" value="10">
+            <input type="button" value="change" onclick="changeParams(paramForm)">
+        </form>
+        <br>
+        <span id="can"></span>
+        <br>
+        <form name="gapForm">
+            <label for="steps">steps</label>
+            <input type="number" min="1" size="3" name="steps" id="steps" value="1">
+            <input type="button" value=" > " onclick="forward(gapForm)">
+        </form>
+    </main>
 </body>
 </html>

@@ -258,6 +258,11 @@ body > div > form > input {
     height: 20px;
 }
 
+body > div > main > form > input {
+    width: 40px;
+    height: 20px;
+}
+
 #grid {
     color: white;
 }
