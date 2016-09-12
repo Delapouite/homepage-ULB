@@ -258,18 +258,16 @@ body > div > form > input {
     height: 20px;
 }
 
-body > div > main > form > input {
-    width: 40px;
-    height: 20px;
-}
+/*body > div > main > form > input {*/
+    /*width: 40px;*/
+    /*height: 20px;*/
+/*}*/
 
-#grid {
-    color: white;
-}
+#canvas { margin: 2ex 0; }
 
-.off {
-    background-color: black;
-}
-.on{
-    background-color: white;
+#canvas > canvas { border: 1px solid black; }
+
+li.listyle {
+    list-style-type: decimal;
+    margin: 20px 0 0 40px;
 }

@@ -1,44 +1,96 @@
 /**
- * Created by Arabella Brayer on 6/09/16.
+ * Created by Arabella Brayer on 6/09/2016.
  */
-var defaultCols = 10;
-var defaultRows = 10;
 
-var MyVars;
-// MyVar is the set of global values needed by the application.
-// init of this globals are defined in the InitVars function
+(function () {
+    "use strict";
+
+    var DEFAULT_NB_COLS = 20;
+    var DEFAULT_NB_ROWS = 10;
+
+    var gameOfLife;
 
 
-function InitVars() {
-    var canvas = createCanvasElement();
-    grid = new Grid(defaultCols, defaultRows);
-    view = new GridView(grid, canvas);
-    this.controller = new GridController(grid, view);
-    console.log("InitVars ok");
-}
 
-InitVars.prototype.getContextOk = function () {
-    return this.controller.getContextOk();
-};
+    function CreateGameOfLife() {
+        var grid = new Grid(DEFAULT_NB_COLS, DEFAULT_NB_ROWS);
+        var view = new GridView(this, grid, DEFAULT_NB_COLS, DEFAULT_NB_ROWS);
 
-function main() {
-    MyVars = MyVars || new InitVars();
-    if (MyVars.getContextOk()) {
-        MyVars.controller.update();
-    } else {
-        alert("Technical problem");
+        this.controller = new GridController(grid, view);
+        console.log("CreateGameOfLife ok");
     }
-}
 
-function changeParams(choices_in_form) {
-    MyVars.controller.setDim(choices_in_form.cols.value, choices_in_form.rows.value);
-    console.log("Data updated : cols = " + choices_in_form.cols.value + " rows = " + choices_in_form.rows.value);
-    main();
-}
 
-function forward(gapForm) {
-    // faudrait ptete s'assurer qu'il s'agit bien d'un entier...
-    for(var i=0; i < gapForm.steps.value; i++) {
-        MyVars.controller.nextStep();
+
+    function changeParams(paramsForm) {
+        console.assert(paramsForm instanceof HTMLElement, paramsForm);
+
+        var nbCols = parseInt(paramsForm.nbCols.value, 10);
+        var nbRows = parseInt(paramsForm.nbRows.value, 10);
+
+        gameOfLife.controller.setDim(nbCols, nbRows);
+        console.log("Data updated : cols = " + nbCols + " rows = " + nbRows);
+        gameOfLife.controller.update();
     }
-}
+
+
+    function forward(gapForm) {
+        console.assert(gapForm instanceof HTMLElement, gapForm);
+
+        var nbSteps = parseInt(gapForm.steps.value, 10);
+        var i;
+
+        for (i = 0; i < nbSteps; ++i) {
+            gameOfLife.controller.nextStep();
+        }
+    }
+
+
+    function setListeners() {
+        document.getElementById("changeParamsButton")
+            .addEventListener("click",
+                function () {
+                    changeParams(document.getElementById("paramsForm"));
+                },
+                false);
+
+        document.getElementById("forwardButton")
+            .addEventListener("click",
+                function () {
+                    forward(document.getElementById("gapForm"));
+                },
+                false);
+
+        document.getElementById("printMatrixButton")
+            .addEventListener("click",
+                function () {
+                    gameOfLife.controller.model.printMatrix();
+                },
+                false);
+
+        document.getElementById("printNbNeighborsAliveButton")
+            .addEventListener("click",
+                function () {
+                    gameOfLife.controller.model.printNbNeighborsAlive();
+                },
+                false);
+    }
+
+
+
+    /* Main */
+    window.addEventListener("load",
+        function () {
+            gameOfLife = new CreateGameOfLife();
+            gameOfLife.controller.update();
+
+            // Set interface
+            var paramsForm = document.getElementById("paramsForm");
+
+            paramsForm.nbCols.value = gameOfLife.controller.model.getNbCols();
+            paramsForm.nbRows.value = gameOfLife.controller.model.getNbRows();
+
+            setListeners();
+        },
+        false);
+}());

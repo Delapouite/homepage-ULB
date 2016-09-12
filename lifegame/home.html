@@ -1,56 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="???">
-    <meta name="keywords" content="???">
 
+    <title>Game of Life</title>
     <link rel="stylesheet" type="text/css" href="./../public/css/style.css">
+    <!--Penser à adapter la feuille de style-->
 
-    <meta charset="utf-8"/>
-    <title>Jeu de la vie</title>
-    <script src="scripts/model/gridModel.js"></script>
-    <script src="scripts/view/gridView.js"></script>
-    <script src="scripts/controller/gridController.js"></script>
-    <script src="scripts/main.js"></script>
-    <style type="text/css">
-        canvas { border: 1px solid red; }
-    </style>
+    <script src="scripts/model/gridModel.js" async></script>
+    <script src="scripts/view/gridView.js" async></script>
+    <script src="scripts/controller/gridController.js" async></script>
+    <script src="scripts/main.js" async></script>
 </head>
-<body onload="main();">
+<body>
+    <div>
+        <header>
+            <h1>
+                <a href="https://github.com/subsib/lifeGame">https://github.com/subsib/lifeGame</a>
+            </h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="./../index.html">home</a></li>
+                <li><a href="./../skills.html">skills</a></li>
+                <li><a href="./../interests.html">interests</a></li>
+                <li><a href="./../news.html">news</a></li>
+                <li><a href="./../contact.html">contact</a></li>
+                <li><a href="./../links.html">links</a></li>
+            </ul>
+        </nav>
+        <main>
+            <form id="paramsForm">
+                <label for="nbCols">Cols</label>
+                <input id="nbCols" type="number" min="1" size="3" value="10">
 
-<div>
-    <header>
-        <h1><a href="http://student.ulb.ac.be/~abrayer/">Arabella <span class="surname">Brayer</span></a></h1>
-    </header>
+                <label for="nbRows">Rows</label>
+                <input id="nbRows" type="number" min="1" size="3" value="20">
 
-    <nav>
-        <ul>
-            <li><a href="./../index.html">home</a></li>
-            <li><a href="./../skills.html">skills</a></li>
-            <li><a href="./../interests.html">interests</a></li>
-            <li><a href="./../news.html">news</a></li>
-            <li><a href="./../contact.html">contact</a></li>
-            <li><a href="./../links.html">links</a></li>
-        </ul>
-    </nav>
-    <main>
-        <form name="paramForm">
-            <label for="rows">Rows</label>
-            <input type="number" min="1" size="3" name="rows" id="rows" value="10">
-            <label for="cols">Cols</label>
-            <input type="number" min="1" size="3" name="cols" id="cols" value="10">
-            <input type="button" value="change" onclick="changeParams(paramForm)">
-        </form>
-        <br>
-        <span id="can"></span>
-        <br>
-        <form name="gapForm">
-            <label for="steps">steps</label>
-            <input type="number" min="1" size="3" name="steps" id="steps" value="1">
-            <input type="button" value=" > " onclick="forward(gapForm)">
-        </form>
-    </main>
+                <input id="changeParamsButton" type="button" value="change">
+            </form>
+            <div id="canvas"></div>
+
+            <form id="gapForm">
+                <label for="steps">steps</label>
+                <input id="steps" type="number" min="1" size="3" value="1">
+
+                <input id="forwardButton" type="button" value=">">
+
+                <input id="printMatrixButton" type="button" value="Print matrix">
+                <input id="printNbNeighborsAliveButton" type="button" value="Print nb neighbors alive">
+            </form>
+
+            <br>
+            <h2>Explications</h2>
+            <p>
+                Le <em>Jeu de la Vie</em> est un exemple de système dynamique qui - sous une apparante simplicité -
+                recèle quelques surprises. Contrairement à ce que laisse entendre son nom, il ne s'agit
+                pas réellement d'un jeu mais d'un automate cellulaire.
+                Il a vu le jour dans les années 1970.
+            </p>
+            <br>
+            <p>Le principe est très simple. La grille représente toutes les cellules du jeu.
+            Ces cellules peuvent être dans deux états : soit en vie, soit morte.
+            L'état au tour suivant est calculé selon ces règles :
+                <ul>
+                    <li class="listyle">Une cellule est en vie si elle a trois voisines en vie</li>
+                    <li class="listyle">Elle est en vie si elle a deux voisines en vie et qu'elle est elle-même en vie</li>
+                    <li class="listyle">Les autres cellules sont mortes</li>
+                </ul>
+            </p>
+            <br>
+            <p>
+                Pour utiliser l'application, il suffit de cliquer sur des cellules pour les réveiller.
+                Afin de passer à l'état suivant, cliquer sur le bouton > .
+            </p>
+            <p>
+                Il est possible de redimensionner la grille. Attention, car ceci remet toutes les cellule dans leur
+                état initial : mortes.
+            </p>
+            <br>
+            <p>
+                Certaines figures initiales sont connues pour avoir des comportements intéressants :
+                stables, cycliques, évoquant un mouvement particulier...
+            </p>
+            <br>
+            <p>
+                L'intérêt d'un tel modèle est qu'il est très difficile de prévoir quels systèmes auront un comportement
+                intéressant à moins de les tester. Les cycles peuvent être très longs.
+            </p>
+            <p>
+                Un autre intérêt réside dans le fait qu'un état peut avoir été provoqué par plusieurs situations
+                différentes, aussi il est impossible dans un état de connaître l'état précédent sans mémoire particulière
+                (le système n'est pas réversible).
+            </p>
+        </main>
+    </div>
 </body>
 </html>
