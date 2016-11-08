@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Prisonners Dilemma</title>
+    <link rel="stylesheet" type="text/css" href="./../public/css/style.css">
+
+    <script src="scripts/model/gridModel.js" async></script>
+    <script src="scripts/view/gridView.js" async></script>
+    <script src="scripts/controller/gridController.js" async></script>
+    <script src="scripts/main.js" async></script>
+</head>
+<body>
+<div>
+    <header>
+        <h1>
+            <a href="https://github.com/subsib/lifeGame">https://github.com/subsib/</a><!-- TODO corriger lien -->
+        </h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="./../index.html">home</a></li>
+            <li><a href="./../skills.html">skills</a></li>
+            <li><a href="./../interests.html">interests</a></li>
+            <li><a href="./../news.html">news</a></li>
+            <li><a href="./../contact.html">contact</a></li>
+            <li><a href="./../links.html">links</a></li>
+        </ul>
+    </nav>
+    <main>
+        <form id="paramsForm">
+            <label for="nbCols">Cols</label>
+            <input id="nbCols" type="number" min="1" size="3" value="10">
+
+            <label for="nbRows">Rows</label>
+            <input id="nbRows" type="number" min="1" size="3" value="20">
+
+            <input id="changeParamsButton" type="button" value="change">
+        </form>
+        <div id="canvas"></div>
+
+        <form id="gapForm">
+            <label for="steps">steps</label>
+            <input id="steps" type="number" min="1" size="3" value="1">
+
+            <input id="forwardButton" type="button" value=">">
+
+            <input id="printMatrixButton" type="button" value="Print matrix">
+            <input id="printNbNeighborsAliveButton" type="button" value="Print nb neighbors alive">
+        </form>
+
+        <br>
+        <h2>Explications</h2>
+        <p>
+            Ceci est un projet pour le cours Learning Dynamics de mon Master 1 à l'ULB.
+            L'énoncé se trouve là : <!-- TODO add link -->
+        </p>
+        <br>
+        <p>Le projet se base sur un article scientifique... <!-- TODO add link + doi -->
+        </p>
+        <br>
+        <p>
+            Pour utiliser l'application, il suffit de ... on verra, j'ai pas encore d'application.
+        </p>
+        <p>
+            Il est possible de redimensionner la grille. Aussi de changer le nombre de voisins pris en considération,
+            et les valeurs des <em>payoffs</em>.
+        </p>
+        <br>
+        <br>
+    </main>
+</div>
+</body>
+</html>
