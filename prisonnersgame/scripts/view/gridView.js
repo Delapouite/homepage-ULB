@@ -52,7 +52,8 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
 
     this.colors  = {
         cooperate: "#FE2E2E",
-        defect: "#5858FA"
+        defect: "#5858FA",
+        gridcolor: "black"
     };
 
     this.gridModel = gridModel;
@@ -60,7 +61,7 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
 }
 
 
-GridView.prototype.asleep = function (x, y) {
+GridView.prototype.doDefect = function (x, y) {
     "use strict";
 
     console.assert(Number.isInteger(x), x);
@@ -69,17 +70,13 @@ GridView.prototype.asleep = function (x, y) {
     console.assert((0 <= y) && (y < this.gridModel.getNbRows()), y);
 
     var ctx = this.getContext();
-
-    // console.log("asleep" + y + ":" + x);
-    ctx.fillStyle = this.colors.cooperate;
-    ctx.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
 
     ctx.fillStyle = this.colors.defect;
     ctx.fillRect(x * this.cellSize + 1, y * this.cellSize + 1, this.cellSize - 2, this.cellSize - 2);
 };
 
 
-GridView.prototype.awake = function (x, y) {
+GridView.prototype.doCooperate = function (x, y) {
     "use strict";
 
     console.assert(Number.isInteger(x), x);
@@ -89,9 +86,12 @@ GridView.prototype.awake = function (x, y) {
 
     var ctx = this.getContext();
 
-    // console.log("awake " + y + ":" + x);
+    // ctx.fillStyle = this.colors.gridcolor;
+    // ctx.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+
+    // console.log("doCooperate " + y + ":" + x);
     ctx.fillStyle = this.colors.cooperate;
-    ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+    ctx.fillRect(x * this.cellSize + 1, y * this.cellSize + 1, this.cellSize - 2, this.cellSize - 2);
 };
 
 
@@ -121,12 +121,7 @@ GridView.prototype.drawOne = function (x, y) {
 
     var ctx = this.getContext();
 
-    if (this.gridModel.isAlive(x, y)) {
-        ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
-    }
-    else {
-        ctx.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
-    }
+    ctx.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
 };
 
 

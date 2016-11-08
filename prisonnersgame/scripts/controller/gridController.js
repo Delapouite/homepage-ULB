@@ -24,12 +24,12 @@ GridController.prototype.nextStep = function () {
         y = cellsToBeReversed[i][1];
 
         if (this.model.cooperate(x, y)) {
-            this.model.asleep(x, y);
-            this.view.asleep(x, y);
+            this.model.doDefect(x, y);
+            this.view.doDefect(x, y);
         }
         else {
-            this.model.awake(x, y);
-            this.view.awake(x, y);
+            this.model.doCooperate(x, y);
+            this.view.doCooperate(x, y);
         }
     }
 };
@@ -41,13 +41,13 @@ GridController.prototype.reverse = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    if (this.model.isAlive(x, y)) {
-        this.model.asleep(x, y);
-        this.view.asleep(x, y);
+    if (this.model.cooperate(x, y)) {
+        this.model.doDefect(x, y);
+        this.view.doDefect(x, y);
     }
     else {
-        this.model.awake(x, y);
-        this.view.awake(x, y);
+        this.model.doCooperate(x, y);
+        this.view.doCooperate(x, y);
     }
 };
 

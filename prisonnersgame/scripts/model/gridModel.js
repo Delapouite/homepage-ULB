@@ -4,13 +4,22 @@
 
 function Grid(nbCols, nbRows) {
     "use strict";
-
     this.setDim(nbCols, nbRows);
 }
 
+Grid.prototype.initMatrix = function () {
+    var arr = [];
+    for (var i=0; i < this.getNbRows(); i++) {
+        arr[i] = [];
+        for(var j=0; j < this.getNbCols(); j++) {
+            arr[i][j] = new Cell();
+        }
+    }
 
+    return arr;
+};
 
-Grid.prototype.asleep = function (x, y) {
+Grid.prototype.doDefect = function (x, y) {
     "use strict";
 
     console.assert(Number.isInteger(x), x);
@@ -18,11 +27,11 @@ Grid.prototype.asleep = function (x, y) {
 
     var key = this.coordsToKey(x, y);
 
-    delete this.aliveCells[key];
+    delete this.cooperatingCells[key];
 };
 
 
-Grid.prototype.awake = function (x, y) {
+Grid.prototype.doCooperate = function (x, y) {
     "use strict";
 
     console.assert(Number.isInteger(x), x);
@@ -30,7 +39,7 @@ Grid.prototype.awake = function (x, y) {
 
     var key = this.coordsToKey(x, y);
 
-    this.aliveCells[key] = null;
+    this.cooperatingCells[key] = null;
 };
 
 
@@ -55,7 +64,7 @@ Grid.prototype.getAliveAndNeighborsCells = function () {
     var neighborX;
     var neighborY;
 
-    for (key in this.aliveCells) {
+    for (key in this.cooperatingCells) {
         key = this.keyToCoords(key);
         x = key[0];
         y = key[1];
@@ -106,7 +115,7 @@ Grid.prototype.getCellsToBeReversed = function () {
     for (i = 0; i < cells.length; ++i) {
         x = cells[i][0];
         y = cells[i][1];
-        if (this.hasToBeAlive(x, y) !== this.cooperate(x, y)) {
+        if (this.hasToCooperate(x, y) !== this.cooperate(x, y)) {
             cellsToBeReversed.push([x, y]);
         }
     }
@@ -144,18 +153,17 @@ Grid.prototype.getNbRows = function () {
 
 
 /**
- * Return true if 3 cooperate cells are around, or 2 and the state is currently cooperate,
+ * Return true if the neighbour with highest score is cooperating
  * false otherwise
  *
- * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules
  */
-Grid.prototype.hasToBeAlive = function (x, y) {
+Grid.prototype.hasToCooperate = function (x, y) {
     "use strict";
 
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    var nb = this.nbNeighborsAlive(x, y);
+    var nb = this.betterNeighbor(x, y);
 
     return (nb === 3) || (nb === 2 && this.cooperate(x, y));
 };
@@ -169,7 +177,7 @@ Grid.prototype.cooperate = function (x, y) {
 
     var key = this.coordsToKey(x, y);
 
-    return (key in this.aliveCells);
+    return (key in this.cooperatingCells);
 };
 
 
@@ -190,7 +198,8 @@ Grid.prototype.keyToCoords = function (key) {
 };
 
 
-Grid.prototype.nbNeighborsAlive = function (x, y) {
+Grid.prototype.betterNeighbor = function (x, y) {
+    // TODO refactorign total
     "use strict";
 
     console.assert(Number.isInteger(x), x);
@@ -202,7 +211,7 @@ Grid.prototype.nbNeighborsAlive = function (x, y) {
 
     for (j = this.getFloorY(y); j <= this.getCeilY(y); ++j) {
         for (i = this.getFloorX(x); i <= this.getCeilX(x); ++i) {
-            if ((i !== x || j !== y) && this.isAlive(i, j)) {
+            if ((i !== x || j !== y) && this.cooperate(i, j)) {
                 ++nb;
             }
         }
@@ -222,13 +231,13 @@ Grid.prototype.printMatrix = function () {
     for (y = 0; y < this.getNbRows(); ++y) {
         line = (y < 10 ? " " : "") + y + "|";
         for (x = 0; x < this.getNbCols(); ++x) {
-            line += (this.isAlive(x, y) ? "x" : ".");
+            line += (this.cooperate(x, y) ? "x" : ".");
         }
         console.log(line);
     }
 };
 
-Grid.prototype.printNbNeighborsAlive = function () {
+Grid.prototype.printNbCooperatingNeighbors = function () {
     "use strict";
 
     var x;
@@ -239,8 +248,8 @@ Grid.prototype.printNbNeighborsAlive = function () {
     for (y = 0; y < this.getNbRows(); ++y) {
         line = (y < 10 ? " " : "") + y + "|";
         for (x = 0; x < this.getNbCols(); ++x) {
-            nb = this.nbNeighborsAlive(x, y);
-            line += (nb > 0 ? this.nbNeighborsAlive(x, y) : ".");
+            nb = this.betterNeighbor(x, y);
+            line += (nb > 0 ? this.betterNeighbor(x, y) : ".");
         }
         console.log(line);
     }
@@ -252,5 +261,5 @@ Grid.prototype.setDim = function (nbCols, nbRows) {
 
     this.nbCols = nbCols;
     this.nbRows = nbRows;
-    this.aliveCells = {};  // associative array used like as set of keys
+    this.cellMatrix = this.initMatrix();  // associative array used like as set of keys
 };

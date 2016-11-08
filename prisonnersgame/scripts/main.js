@@ -71,8 +71,7 @@
         document.getElementById("printNbNeighborsAliveButton")
             .addEventListener("click",
                 function () {
-                    prisonner.controller.model.printNbNeighborsAlive();
-                    // TODO change the name, refactoring
+                    prisonner.controller.model.printNbCooperatingNeighbors();
                 },
                 false);
     }
