@@ -98,7 +98,7 @@ GridView.prototype.awake = function (x, y) {
 
     // console.log("awake " + y + ":" + x);
     ctx.fillStyle = this.colors.alive;
-    ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+    ctx.fillRect(x * this.cellSize + 1, y * this.cellSize + 1, this.cellSize - 2, this.cellSize - 2);
 };
 
 
