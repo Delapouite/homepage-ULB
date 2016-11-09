@@ -7,6 +7,7 @@
 
     var DEFAULT_NB_COLS = 50;
     var DEFAULT_NB_ROWS = 50;
+    var DEFAULT_RATE_OF_COOPERATE = 0.5;
 
     var prisonner;
 
@@ -17,10 +18,8 @@
         var view = new GridView(this, grid, DEFAULT_NB_COLS, DEFAULT_NB_ROWS);
 
         this.controller = new GridController(grid, view);
-        console.log("CreatePrisonner ok");
+        console.log("CreatePrisonner grid ok");
     }
-
-
 
     function changeParams(paramsForm) {
         console.assert(paramsForm instanceof HTMLElement, paramsForm);
@@ -83,14 +82,14 @@
         function () {
             prisonner = new CreateWindow();
             prisonner.controller.update();
-
-            // Set interface
-            var paramsForm = document.getElementById("paramsForm");
-
-            paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
-            paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
-
-            setListeners();
+//
+//             // Set interface
+//             var paramsForm = document.getElementById("paramsForm");
+//
+//             paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
+//             paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
+// // TODO add other params : payoffs, percent, ...
+//             setListeners();
         },
         false);
 }());

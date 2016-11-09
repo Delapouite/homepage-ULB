@@ -67,5 +67,7 @@ GridController.prototype.update = function () {
     "use strict";
 
     this.view.drawAll();
+    console.log("grid ok");
+    this.model.doCooperate(1, 1);
 };
 

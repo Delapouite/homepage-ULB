@@ -2,21 +2,31 @@
  * Created by Arabella Brayer on 8/11/2016.
  */
 
+
 function Grid(nbCols, nbRows) {
     "use strict";
     this.setDim(nbCols, nbRows);
+    this.cellMatrix = this.initMatrix(nbCols, nbRows);
 }
 
-Grid.prototype.initMatrix = function () {
+Grid.prototype.initMatrix = function (nbRows, nbCols) {
     var arr = [];
-    for (var i=0; i < this.getNbRows(); i++) {
+    for (var i=0; i < nbRows; i++) {
         arr[i] = [];
-        for(var j=0; j < this.getNbCols(); j++) {
+        for(var j=0; j < nbCols; j++) {
             arr[i][j] = new Cell();
+            arr[i][j].setState(Math.floor(Math.random()));
         }
     }
-
     return arr;
+};
+
+Grid.prototype.fillMatRandom = function () {
+    for (var i=0; i < this.getNbRows(); i++){
+        for(var j=0; j < this.getNbCols(); j++){
+            this.cellMatrix[i][j].setState(Math.floor(Math.random()));
+        }
+    }
 };
 
 Grid.prototype.doDefect = function (x, y) {
@@ -25,9 +35,9 @@ Grid.prototype.doDefect = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    var key = this.coordsToKey(x, y);
+    // var key = this.coordsToKey(x, y);
 
-    delete this.cooperatingCells[key];
+    delete this.cellMatrix[x][y];
 };
 
 
@@ -37,9 +47,7 @@ Grid.prototype.doCooperate = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    var key = this.coordsToKey(x, y);
-
-    this.cooperatingCells[key] = null;
+    this.cellMatrix[x][y].setState(COOPSTATE);
 };
 
 
@@ -261,5 +269,12 @@ Grid.prototype.setDim = function (nbCols, nbRows) {
 
     this.nbCols = nbCols;
     this.nbRows = nbRows;
-    this.cellMatrix = this.initMatrix();  // associative array used like as set of keys
+    this.cellMatrix = this.initMatrix();  // 2d array of Cell objects
+
+    // for(var i = 0; i < nbRows; i++){
+    //     for(var j =0; j < nbCols; j++){
+    //         console.log(this.cellMatrix[i][j].value);
+    //     }
+    // }
+
 };
