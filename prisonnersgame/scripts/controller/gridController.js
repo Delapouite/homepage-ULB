@@ -63,11 +63,13 @@ GridController.prototype.setDim = function (x, y) {
 };
 
 
-GridController.prototype.update = function () {
+GridController.prototype.createGrid = function () {
     "use strict";
-
     this.view.drawAll();
     console.log("grid ok");
-    this.model.doCooperate(1, 1);
+};
+
+GridController.prototype.update = function () {
+    // TODO write the func
 };
 

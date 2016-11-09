@@ -29,7 +29,7 @@
 
         prisonner.controller.setDim(nbCols, nbRows);
         console.log("Data updated : cols = " + nbCols + " rows = " + nbRows);
-        prisonner.controller.update();
+        prisonner.controller.createGrid();
     }
 
 
@@ -81,6 +81,7 @@
     window.addEventListener("load",
         function () {
             prisonner = new CreateWindow();
+            prisonner.controller.createGrid();
             prisonner.controller.update();
 //
 //             // Set interface
