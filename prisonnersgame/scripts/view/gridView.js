@@ -12,11 +12,13 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
 
         canvas.setAttribute("width", nbCols * gridView.cellSize);
         canvas.setAttribute("height", nbRows * gridView.cellSize);
-        canvas.addEventListener("click",
-            function (event) {
-                reverseCell(gridView, event);
-            },
-            false);
+        // canvas.addEventListener("click",
+        //     function (event) {
+        //         reverseCell(gridView, event);
+        //     },
+        //     false);
+        // Dans ce projet, on n'a pas besoin de changer soi-même, c'est fait random
+        // pourrait être une option mais plus tard...
 
         document.getElementById("canvas").appendChild(canvas);
 
@@ -139,4 +141,23 @@ GridView.prototype.resize = function () {
 
     canvas.setAttribute("width", this.gridModel.getNbCols() * this.cellSize);
     canvas.setAttribute("height", this.gridModel.getNbRows() * this.cellSize);
+};
+
+GridView.prototype.update = function () {
+    "use strict";
+
+    var ctx = this.getContext();
+    var x;
+    var y;
+
+    for (y = 0; y < this.gridModel.getNbRows(); ++y) {
+        for (x = 0; x < this.gridModel.getNbCols(); ++x) {
+            if(this.gridModel.cellMatrix[x][y].state == COOPSTATE){
+                this.doCooperate(x, y);
+            } else {
+                this.doDefect(x, y);
+            }
+
+        }
+    }
 };

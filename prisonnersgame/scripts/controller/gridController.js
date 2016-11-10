@@ -58,6 +58,7 @@ GridController.prototype.setDim = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
+    this.model.initMatrix(x, y);
     this.model.setDim(x, y);
     this.view.resize();
 };
@@ -70,6 +71,6 @@ GridController.prototype.createGrid = function () {
 };
 
 GridController.prototype.update = function () {
-    // TODO write the func
+    this.view.update();
 };
 

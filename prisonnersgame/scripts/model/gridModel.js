@@ -6,27 +6,47 @@
 function Grid(nbCols, nbRows) {
     "use strict";
     this.setDim(nbCols, nbRows);
-    this.cellMatrix = this.initMatrix(nbCols, nbRows);
+    this.initMatrix(nbCols, nbRows); // init this.cellMatrix
+    this.nbCoops = 0;
+    this.nbDefect = 0;
 }
 
-Grid.prototype.initMatrix = function (nbRows, nbCols) {
+Grid.prototype.initMatrix = function (nbCols, nbRows) {
+    "use strict";
+
+    this.cellMatrix = this.generateMatrix(nbCols, nbRows);
+
+    this.cleanCount();
+    for (var i=0; i < nbRows; i++) {
+        for(var j=0; j < nbCols; j++) {
+            var state = Math.round(Math.random()+1);
+            if(state == COOPSTATE){
+                this.nbCoops++;
+            } else {
+                this.nbDefect++;
+            }
+            this.cellMatrix[i][j].setState(state);
+        }
+    }
+};
+
+Grid.prototype.generateMatrix = function (nbCols, nbRows) {
+    "use strict";
     var arr = [];
     for (var i=0; i < nbRows; i++) {
         arr[i] = [];
         for(var j=0; j < nbCols; j++) {
             arr[i][j] = new Cell();
-            arr[i][j].setState(Math.floor(Math.random()));
         }
     }
     return arr;
 };
 
-Grid.prototype.fillMatRandom = function () {
-    for (var i=0; i < this.getNbRows(); i++){
-        for(var j=0; j < this.getNbCols(); j++){
-            this.cellMatrix[i][j].setState(Math.floor(Math.random()));
-        }
-    }
+
+
+Grid.prototype.cleanCount = function () {
+    this.nbCoops = 0;
+    this.nbDefect = 0;
 };
 
 Grid.prototype.doDefect = function (x, y) {
@@ -269,12 +289,4 @@ Grid.prototype.setDim = function (nbCols, nbRows) {
 
     this.nbCols = nbCols;
     this.nbRows = nbRows;
-    this.cellMatrix = this.initMatrix();  // 2d array of Cell objects
-
-    // for(var i = 0; i < nbRows; i++){
-    //     for(var j =0; j < nbCols; j++){
-    //         console.log(this.cellMatrix[i][j].value);
-    //     }
-    // }
-
 };

@@ -26,10 +26,10 @@
 
         var nbCols = parseInt(paramsForm.nbCols.value, 10);
         var nbRows = parseInt(paramsForm.nbRows.value, 10);
-
         prisonner.controller.setDim(nbCols, nbRows);
         console.log("Data updated : cols = " + nbCols + " rows = " + nbRows);
         prisonner.controller.createGrid();
+        prisonner.controller.update();
     }
 
 
@@ -85,12 +85,12 @@
             prisonner.controller.update();
 //
 //             // Set interface
-//             var paramsForm = document.getElementById("paramsForm");
+            var paramsForm = document.getElementById("paramsForm");
 //
-//             paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
-//             paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
+            paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
+            paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
 // // TODO add other params : payoffs, percent, ...
-//             setListeners();
+            setListeners();
         },
         false);
 }());
