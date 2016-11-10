@@ -5,6 +5,7 @@
 
 function Grid(nbCols, nbRows, T, R, P, S) {
     "use strict";
+
     this.setDim(nbCols, nbRows);
     this.initMatrix(nbCols, nbRows); // init this.cellMatrix
     this.nbCoops = 0;
