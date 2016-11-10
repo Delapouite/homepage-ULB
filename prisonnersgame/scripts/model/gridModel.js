@@ -17,8 +17,8 @@ Grid.prototype.initMatrix = function (nbCols, nbRows) {
     this.cellMatrix = this.generateMatrix(nbCols, nbRows);
 
     this.cleanCount();
-    for (var i=0; i < nbRows; i++) {
-        for(var j=0; j < nbCols; j++) {
+    for (var i=0; i < nbCols; i++) {
+        for(var j=0; j < nbRows; j++) {
             var state = Math.round(Math.random()+1);
             if(state == COOPSTATE){
                 this.nbCoops++;
@@ -33,9 +33,9 @@ Grid.prototype.initMatrix = function (nbCols, nbRows) {
 Grid.prototype.generateMatrix = function (nbCols, nbRows) {
     "use strict";
     var arr = [];
-    for (var i=0; i < nbRows; i++) {
+    for (var i=0; i < nbCols; i++) {
         arr[i] = [];
-        for(var j=0; j < nbCols; j++) {
+        for(var j=0; j < nbRows; j++) {
             arr[i][j] = new Cell();
         }
     }

@@ -89,7 +89,7 @@
 //
             paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
             paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
-// // TODO add other params : payoffs, percent, ...
+// TODO add other params : payoffs, percent, ...
             setListeners();
         },
         false);
