@@ -25,18 +25,18 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
         return canvas;
     }
 
-    function createSummerizeElement(gridView) {
-        console.assert(gridView instanceof GridView, gridView);
-
-        var summerize = document.createElement("summerize");
-        var title = document.createElement("h3");
-        title.textContent = "Summurize";
-        summerize.appendChild(title);
-        var sumVars = document.createElement("")
-        document.getElementById("summerize").appendChild(summerize);
-
-        return summerize;
-    }
+    // function createSummerizeElement(gridView) {
+    //     console.assert(gridView instanceof GridView, gridView);
+    //
+    //     var summerize = document.createElement("summerize");
+    //     var title = document.createElement("h3");
+    //     title.textContent = "Summurize";
+    //     summerize.appendChild(title);
+    //     var sumVars = document.createElement("")
+    //     document.getElementById("summerize").appendChild(summerize);
+    //
+    //     return summerize;
+    // }
 
     // function reverseCell(gridView, event) {
     //     console.assert(gridView instanceof GridView, gridView);
@@ -156,6 +156,10 @@ GridView.prototype.resize = function () {
     canvas.setAttribute("height", this.gridModel.getNbRows() * this.cellSize);
 };
 
+GridView.prototype.tableUpdate = function () {
+    var summerize = document.getElementById("T");
+};
+
 GridView.prototype.update = function () {
     "use strict";
 
@@ -173,4 +177,5 @@ GridView.prototype.update = function () {
 
         }
     }
+    this.tableUpdate();
 };
