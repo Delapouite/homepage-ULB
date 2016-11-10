@@ -8,6 +8,7 @@ function GridController(model, view) {
 
     this.model = model;
     this.view = view;
+    this.turn = 0; // turn number : if 0, random, else, imitation
 }
 
 
@@ -63,9 +64,10 @@ GridController.prototype.setDim = function (x, y) {
     this.view.resize();
 };
 
-GridController.prototype.setPayoffs = function (T, R, P, S) {
-    this.model.setPayoffs(T, R, P, S);
-};
+// GridController.prototype.setPayoff = function (key, value) {
+//     this.model.setPayoffs(key, value);
+//     this.view.updatePayoff(key, value);
+// };
 
 GridController.prototype.createGrid = function () {
     "use strict";

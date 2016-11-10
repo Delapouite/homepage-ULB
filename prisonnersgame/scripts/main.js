@@ -69,12 +69,12 @@
                 },
                 false);
 
-        document.getElementById("changePayoffButton")
-            .addEventListener("click",
-                function () {
-                    changePayoffs(document.getElementById("payoffsForm"));
-                },
-                false);
+        // document.getElementById("changePayoffButton")
+        //     .addEventListener("click",
+        //         function () {
+        //             changePayoffs(document.getElementById("payoffsForm"));
+        //         },
+        //         false);
 
         document.getElementById("forwardButton")
             .addEventListener("click",

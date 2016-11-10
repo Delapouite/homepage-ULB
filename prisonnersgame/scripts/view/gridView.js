@@ -25,43 +25,6 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
         return canvas;
     }
 
-    // function createSummerizeElement(gridView) {
-    //     console.assert(gridView instanceof GridView, gridView);
-    //
-    //     var summerize = document.createElement("summerize");
-    //     var title = document.createElement("h3");
-    //     title.textContent = "Summurize";
-    //     summerize.appendChild(title);
-    //     var sumVars = document.createElement("")
-    //     document.getElementById("summerize").appendChild(summerize);
-    //
-    //     return summerize;
-    // }
-
-    // function reverseCell(gridView, event) {
-    //     console.assert(gridView instanceof GridView, gridView);
-    //     console.assert(event instanceof Event, event);
-    //
-    //     var x;
-    //     var y;
-    //
-    //     if (event.x !== undefined && event.y !== undefined) {
-    //         console.log("pas ff method"); // non testé sous IE/Edge etc.
-    //         x = event.x - canvas.offsetLeft;
-    //         y = event.y - canvas.offsetTop;
-    //     } else { // ff method
-    //         console.log("ff method");
-    //         var rect = gridView.canvas.getBoundingClientRect();
-    //         x = event.clientX - rect.left;
-    //         y = event.clientY - rect.top;
-    //     }
-    //
-    //     x = Math.floor(x/gridView.cellSize);
-    //     y = Math.floor(y/gridView.cellSize);
-    //     prisonnerGame.controller.reverse(x, y);
-    // }
-
-
     this.cellSize = 10;
 
     this.colors  = {
@@ -72,7 +35,7 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
 
     this.gridModel = gridModel;
     this.canvas = createCanvasElement(this);
-    // this.summerize = createSummerizeElement(this);
+    // this.summerize = createSummerizeElement(this); // TODO pourrait fixer ici les valeurs dans les cells du table
 }
 
 
@@ -157,7 +120,7 @@ GridView.prototype.resize = function () {
 };
 
 GridView.prototype.tableUpdate = function () {
-    var summerize = document.getElementById("T");
+    // var summerize = document.getElementById("T").innerHTML = ;
 };
 
 GridView.prototype.update = function () {
