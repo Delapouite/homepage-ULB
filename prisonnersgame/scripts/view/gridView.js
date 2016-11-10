@@ -25,6 +25,17 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
         return canvas;
     }
 
+    function createSummerizeElement(gridView) {
+        console.assert(gridView instanceof GridView, gridView);
+
+        var summerize = document.createElement("summerize");
+        var title = document.createElement("h3");
+        title.a
+        document.getElementById("summerize").appendChild(summerize);
+
+        return summerize;
+
+    }
 
     function reverseCell(gridView, event) {
         console.assert(gridView instanceof GridView, gridView);

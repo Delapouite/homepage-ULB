@@ -63,6 +63,9 @@ GridController.prototype.setDim = function (x, y) {
     this.view.resize();
 };
 
+GridController.prototype.setPayoffs = function (T, R, P, S) {
+    this.model.setPayoffs(T, R, P, S);
+};
 
 GridController.prototype.createGrid = function () {
     "use strict";
