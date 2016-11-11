@@ -8,8 +8,6 @@ function Grid(nbCols, nbRows, T, R, P, S) {
 
     this.setDim(nbCols, nbRows);
     this.initMatrix(nbCols, nbRows); // init this.cellMatrix
-    this.nbCoops = 0;
-    this.nbDefect = 0;
     this.t = T;
     this.r = R;
     this.p = P;
@@ -34,6 +32,11 @@ Grid.prototype.initMatrix = function (nbCols, nbRows) {
         }
     }
 };
+
+Grid.prototype.getRate = function () {
+    return this.nbCoops / (this.nbRows * this.nbCols);
+};
+
 
 Grid.prototype.generateMatrix = function (nbCols, nbRows) {
     "use strict";
@@ -294,14 +297,4 @@ Grid.prototype.setDim = function (nbCols, nbRows) {
 
     this.nbCols = nbCols;
     this.nbRows = nbRows;
-};
-
-Grid.prototype.setPayoffs = function (T, R, P, S){
-    "use strict";
-
-    this.t = T;
-    this.r = R;
-    this.p = P;
-    this.s = S;
-
 };

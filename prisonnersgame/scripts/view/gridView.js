@@ -118,8 +118,10 @@ GridView.prototype.resize = function () {
     canvas.setAttribute("height", this.gridModel.getNbRows() * this.cellSize);
 };
 
-GridView.prototype.tableUpdate = function () {
-    // var summerize = document.getElementById("T").innerHTML = ;
+GridView.prototype.countRefresh = function () {
+    document.getElementById("coopContent").innerHTML = this.gridModel.nbCoops;
+    document.getElementById("defectContent").innerHTML = this.gridModel.nbDefect;
+    document.getElementById("rateContent").innerHTML = this.gridModel.getRate();
 };
 
 GridView.prototype.update = function () {
@@ -139,8 +141,10 @@ GridView.prototype.update = function () {
 
         }
     }
-    this.tableUpdate();
+    this.countRefresh();
+
 };
+
 
 GridView.prototype.tableRefresh = function () {
     document.getElementById("tContent").innerHTML = this.gridModel.t;
