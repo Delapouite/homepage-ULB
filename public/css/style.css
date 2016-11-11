@@ -258,12 +258,51 @@ body > div > form > input {
     height: 20px;
 }
 
-/*body > div > main > form > input {*/
-    /*width: 40px;*/
-    /*height: 20px;*/
-/*}*/
+body > div > main > form#payoffsForm > input {
+    width: 60px;
+    height: 15px;
+}
+body > div > main > form#payoffsForm > input[type=button] {
+    width: 60px;
+    height: 25px;
+}
 
 #canvas { margin: 2ex 0; }
+
+#tableVars {
+    border-collapse: collapse;
+    margin: 50px 0px 50px 50px;
+}
+
+#tableVars table, td, th {
+    border: 2px solid #4323ff;
+}
+
+#tableVars th, td, tr {
+    text-align: center;
+    font-size: large;
+    width: 100px;
+}
+
+#tableVars input {
+    width: 30px;
+    height: 30px;
+}
+
+#tContent, #pContent, #rContent, #sContent{
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
+    float: left;
+}
+
+#tMinus, #rMinus, #pMinus, #sMinus {
+    float: left;
+}
+
+#tPlus, #rPlus, #pPlus, #sPlus {
+    float: right;
+}
 
 #canvas > canvas { border: 1px solid black; }
 
