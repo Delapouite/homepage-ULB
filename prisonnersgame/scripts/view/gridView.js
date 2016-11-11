@@ -35,7 +35,6 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
 
     this.gridModel = gridModel;
     this.canvas = createCanvasElement(this);
-    // this.summerize = createSummerizeElement(this); // TODO pourrait fixer ici les valeurs dans les cells du table
 }
 
 
@@ -141,4 +140,11 @@ GridView.prototype.update = function () {
         }
     }
     this.tableUpdate();
+};
+
+GridView.prototype.tableRefresh = function () {
+    document.getElementById("tContent").innerHTML = this.gridModel.t;
+    document.getElementById("pContent").innerHTML = this.gridModel.p;
+    document.getElementById("rContent").innerHTML = this.gridModel.r;
+    document.getElementById("sContent").innerHTML = this.gridModel.s;
 };

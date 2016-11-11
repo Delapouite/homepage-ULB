@@ -303,4 +303,5 @@ Grid.prototype.setPayoffs = function (T, R, P, S){
     this.r = R;
     this.p = P;
     this.s = S;
+
 };

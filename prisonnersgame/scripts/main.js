@@ -2,6 +2,17 @@
  * Created by Arabella Brayer on 8/11/2016.
  */
 
+// global vars
+var TMINUS = 1;
+var TPLUS = 2;
+var RMINUS = 3;
+var RPLUS = 4;
+var PMINUS = 5;
+var PPLUS = 6;
+var SMINUS = 7;
+var SPLUS = 8;
+
+
 (function () {
     "use strict";
 
@@ -31,21 +42,11 @@
         var nbCols = parseInt(paramsForm.nbCols.value, 10);
         var nbRows = parseInt(paramsForm.nbRows.value, 10);
         prisonner.controller.setDim(nbCols, nbRows);
-        prisonner.controller.createGrid();
-        prisonner.controller.update();
         console.log("Data updated : cols = " + nbCols + " rows = " + nbRows);
     }
 
-    function changePayoffs(payoffsForm) {
-        console.assert(payoffsForm instanceof HTMLElement, payoffsForm);
-
-        var T = parseInt(payoffsForm.t.value, 10);
-        var R = parseInt(payoffsForm.r.value, 10);
-        var P = parseInt(payoffsForm.p.value, 10);
-        var S = parseInt(payoffsForm.s.value, 10);
-        prisonner.controller.setPayoffs(T, R, P, S);
-        prisonner.controller.createGrid();
-        prisonner.controller.update();
+    function changePayoffs(selectedVar) {
+        prisonner.controller.modifPayoff(selectedVar);
         console.log("changePayoffs done");
     }
 
@@ -68,13 +69,63 @@
                     changeParams(document.getElementById("paramsForm"));
                 },
                 false);
+// table buttons
+        document.getElementById("tMinus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(TMINUS);
+                },
+                false);
 
-        // document.getElementById("changePayoffButton")
-        //     .addEventListener("click",
-        //         function () {
-        //             changePayoffs(document.getElementById("payoffsForm"));
-        //         },
-        //         false);
+        document.getElementById("tPlus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(TPLUS);
+                },
+                false);
+
+        document.getElementById("rMinus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(RMINUS);
+                },
+                false);
+
+        document.getElementById("rPlus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(RPLUS);
+                },
+                false);
+
+        document.getElementById("pMinus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(PMINUS);
+                },
+                false);
+
+        document.getElementById("pPlus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(PPLUS);
+                },
+                false);
+
+        document.getElementById("sMinus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(SMINUS);
+                },
+                false);
+
+        document.getElementById("sPlus")
+            .addEventListener("click",
+                function () {
+                    changePayoffs(SPLUS);
+                },
+                false);
+// end table buttons
 
         document.getElementById("forwardButton")
             .addEventListener("click",

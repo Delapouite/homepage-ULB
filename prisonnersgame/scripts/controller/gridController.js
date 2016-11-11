@@ -62,15 +62,52 @@ GridController.prototype.setDim = function (x, y) {
     this.model.initMatrix(x, y);
     this.model.setDim(x, y);
     this.view.resize();
+    this.createGrid();
+    this.update();
 };
 
-// GridController.prototype.setPayoff = function (key, value) {
-//     this.model.setPayoffs(key, value);
-//     this.view.updatePayoff(key, value);
-// };
+GridController.prototype.modifPayoff = function (selectedVar) {
+    "use strict";
+
+    console.assert(Number.isInteger(selectedVar), selectedVar);
+
+    switch (selectedVar){
+        case TMINUS:
+            this.model.t--;
+            break;
+        case TPLUS:
+            this.model.t++;
+            break;
+        case RMINUS:
+            this.model.r--;
+            break;
+        case RPLUS:
+            this.model.r++;
+            break;
+        case PMINUS:
+            this.model.p--;
+            break;
+        case PPLUS:
+            this.model.p++;
+            break;
+        case SMINUS:
+            this.model.s--;
+            break;
+        case SPLUS:
+            this.model.s++;
+            break;
+    }
+    this.view.tableRefresh();
+    this.model.initMatrix(this.model.nbCols, this.model.nbRows);
+    this.createGrid();
+    this.update();
+
+};
+
 
 GridController.prototype.createGrid = function () {
     "use strict";
+
     this.view.drawAll();
     console.log("grid ok");
 };
