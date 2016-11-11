@@ -112,7 +112,13 @@
 //
             paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
             paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
-// TODO add other params : payoffs, percent, ...
+
+            // set interface table
+            document.getElementById("tContent").innerHTML = prisonner.controller.model.t;
+            document.getElementById("pContent").innerHTML = prisonner.controller.model.p;
+            document.getElementById("rContent").innerHTML = prisonner.controller.model.r;
+            document.getElementById("sContent").innerHTML = prisonner.controller.model.s;
+
             setListeners();
         },
         false);
