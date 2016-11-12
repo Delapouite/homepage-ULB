@@ -15,24 +15,13 @@ function GridController(model, view) {
 GridController.prototype.nextStep = function () {
     "use strict";
 
-    var cellsToBeReversed = this.model.getCellsToBeReversed();
-    var i;
-    var y;
-    var x;
+    // 1 - calculer les nouveaux scores
+    this.model.computeScores();
+    // 2 - calculer les nouvelles actions
+    this.model.computeActions();
+    // 3 - mettre à jour...
+    this.update();
 
-    for (i = 0; i < cellsToBeReversed.length; ++i) {
-        x = cellsToBeReversed[i][0];
-        y = cellsToBeReversed[i][1];
-
-        if (this.model.cooperate(x, y)) {
-            this.model.doDefect(x, y);
-            this.view.doDefect(x, y);
-        }
-        else {
-            this.model.doCooperate(x, y);
-            this.view.doCooperate(x, y);
-        }
-    }
 };
 
 

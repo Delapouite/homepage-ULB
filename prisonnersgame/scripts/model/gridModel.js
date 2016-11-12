@@ -167,12 +167,12 @@ Grid.prototype.cooperate = function (x, y) {
  */
 Grid.prototype.computeScores = function () {
     "use strict";
-
-    var i;
-    var j;
-    for(i=0; i < this.nbCols; i++){
-        for(j=0; j < this.nbRows; j++){
-            this.cellMatrix[i][j].score = this.computeScore(x, y);
+// TODO Priority on the development of this part
+    var x;
+    var y;
+    for(x=0; x < this.nbCols; x++){
+        for(y=0; y < this.nbRows; y++){
+            this.cellMatrix[x][y].score = this.computeScore(x, y);
         }
     }
 };
