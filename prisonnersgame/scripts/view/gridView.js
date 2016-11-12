@@ -123,6 +123,12 @@ GridView.prototype.countRefresh = function () {
     document.getElementById("defectContent").innerHTML = this.gridModel.nbDefect;
     document.getElementById("rateContent").innerHTML = Math.round(this.gridModel.getRate()*100)/100;
 };
+GridView.prototype.modeRefresh = function () {
+    if(this.gridModel.mode == MOORE){
+        document.getElementById("modeContent").innerHTML = "Moore";
+    } else {
+        document.getElementById("modeContent").innerHTML = "VN";
+    }};
 
 GridView.prototype.update = function () {
     "use strict";
@@ -146,9 +152,10 @@ GridView.prototype.update = function () {
 };
 
 
-GridView.prototype.tableRefresh = function () {
+GridView.prototype.tableRefresh = function (turn) {
     document.getElementById("tContent").innerHTML = this.gridModel.t;
     document.getElementById("pContent").innerHTML = this.gridModel.p;
     document.getElementById("rContent").innerHTML = this.gridModel.r;
     document.getElementById("sContent").innerHTML = this.gridModel.s;
+    document.getElementById("stepsContent").innerHTML = turn;
 };

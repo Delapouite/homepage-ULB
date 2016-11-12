@@ -80,6 +80,15 @@ Grid.prototype.changePayoff = function(selectedVar){
     this.initMatrix(this.nbCols, this.nbRows);
 };
 
+Grid.prototype.xchangeMode = function () {
+    if(this.mode == MOORE){
+        this.mode = VN;
+    } else {
+        this.mode = MOORE;
+    }
+    this.initMatrix(this.nbCols, this.nbRows);
+};
+
 Grid.prototype.cleanCount = function () {
     this.nbCoops = 0;
     this.nbDefect = 0;

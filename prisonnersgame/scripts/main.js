@@ -11,6 +11,9 @@ var PMINUS = 5;
 var PPLUS = 6;
 var SMINUS = 7;
 var SPLUS = 8;
+//mode
+var MOORE = 1;
+var VN = 2;
 
 (function () {
     "use strict";
@@ -25,8 +28,6 @@ var SPLUS = 8;
     var DEFAULT_P = 0;
     var DEFAULT_S = 0;
     // mode vars
-    var MOORE = 1;
-    var VN = 2;
     var DEFAULT_MODE = MOORE;
 
     var prisonner;
@@ -170,25 +171,8 @@ var SPLUS = 8;
             prisonner = new CreateWindow();
             prisonner.controller.createGrid();
             prisonner.controller.update();
-
-//             // Set interface
-            var paramsForm = document.getElementById("paramsForm");
-//
-            paramsForm.nbCols.value = prisonner.controller.model.getNbCols();
-            paramsForm.nbRows.value = prisonner.controller.model.getNbRows();
-
-            // set interface table
-            document.getElementById("tContent").innerHTML = prisonner.controller.model.t;
-            document.getElementById("pContent").innerHTML = prisonner.controller.model.p;
-            document.getElementById("rContent").innerHTML = prisonner.controller.model.r;
-            document.getElementById("sContent").innerHTML = prisonner.controller.model.s;
-
-            // set mode table
-            if(prisonner.controller.model.mode == MOORE){
-                document.getElementById("modeContent").innerHTML = "Moore";
-            } else {
-                document.getElementById("modeContent").innerHTML = "VN";
-            }
+//             // set interface table
+            prisonner.controller.load();
 
             setListeners();
         },
