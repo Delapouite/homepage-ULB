@@ -271,7 +271,7 @@ body > div > main > form#payoffsForm > input[type=button] {
 
 #tableVars {
     border-collapse: collapse;
-    margin: 50px 0px 50px 50px;
+    margin: 50px 0px 50px 0px;
 }
 
 #tableVars table, td, th {
@@ -280,8 +280,7 @@ body > div > main > form#payoffsForm > input[type=button] {
 
 #tableVars th, td, tr {
     text-align: center;
-    font-size: large;
-    width: 100px;
+    width: 90px;
 }
 
 #tableVars input {
