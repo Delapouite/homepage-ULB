@@ -12,24 +12,29 @@ var PPLUS = 6;
 var SMINUS = 7;
 var SPLUS = 8;
 
-
 (function () {
     "use strict";
 
+    // grid options
     var DEFAULT_NB_COLS = 50;
     var DEFAULT_NB_ROWS = 50;
     // var DEFAULT_RATE_OF_COOPERATE = 0.5; // TODO add this option, after...
+    // payoffs vars
     var DEFAULT_T = 10;
     var DEFAULT_R = 7;
     var DEFAULT_P = 0;
     var DEFAULT_S = 0;
+    // mode vars
+    var MOORE = 1;
+    var VN = 2;
+    var DEFAULT_MODE = MOORE;
 
     var prisonner;
 
 
 
     function CreateWindow() {
-        var grid = new Grid(DEFAULT_NB_COLS, DEFAULT_NB_ROWS, DEFAULT_T, DEFAULT_R, DEFAULT_P, DEFAULT_S);
+        var grid = new Grid(DEFAULT_NB_COLS, DEFAULT_NB_ROWS, DEFAULT_T, DEFAULT_R, DEFAULT_P, DEFAULT_S, DEFAULT_MODE);
         var view = new GridView(this, grid, DEFAULT_NB_COLS, DEFAULT_NB_ROWS);
 
         this.controller = new GridController(grid, view);
@@ -147,6 +152,14 @@ var SPLUS = 8;
                     prisonner.controller.model.printScores();
                 },
                 false);
+
+        document.getElementById("changeMode")
+            .addEventListener("click",
+                function () {
+                    prisonner.controller.changeMode();
+                },
+                false);
+
     }
 
 
@@ -157,7 +170,7 @@ var SPLUS = 8;
             prisonner = new CreateWindow();
             prisonner.controller.createGrid();
             prisonner.controller.update();
-//
+
 //             // Set interface
             var paramsForm = document.getElementById("paramsForm");
 //
@@ -169,6 +182,13 @@ var SPLUS = 8;
             document.getElementById("pContent").innerHTML = prisonner.controller.model.p;
             document.getElementById("rContent").innerHTML = prisonner.controller.model.r;
             document.getElementById("sContent").innerHTML = prisonner.controller.model.s;
+
+            // set mode table
+            if(prisonner.controller.model.mode == MOORE){
+                document.getElementById("modeContent").innerHTML = "Moore";
+            } else {
+                document.getElementById("modeContent").innerHTML = "VN";
+            }
 
             setListeners();
         },

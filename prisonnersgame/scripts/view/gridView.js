@@ -121,7 +121,7 @@ GridView.prototype.resize = function () {
 GridView.prototype.countRefresh = function () {
     document.getElementById("coopContent").innerHTML = this.gridModel.nbCoops;
     document.getElementById("defectContent").innerHTML = this.gridModel.nbDefect;
-    document.getElementById("rateContent").innerHTML = this.gridModel.getRate();
+    document.getElementById("rateContent").innerHTML = Math.round(this.gridModel.getRate()*100)/100;
 };
 
 GridView.prototype.update = function () {

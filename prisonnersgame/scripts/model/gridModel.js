@@ -2,8 +2,7 @@
  * Created by Arabella Brayer on 8/11/2016.
  */
 
-
-function Grid(nbCols, nbRows, T, R, P, S) {
+function Grid(nbCols, nbRows, T, R, P, S, mode) {
     "use strict";
 
     this.setDim(nbCols, nbRows);
@@ -12,6 +11,7 @@ function Grid(nbCols, nbRows, T, R, P, S) {
     this.r = R;
     this.p = P;
     this.s = S;
+    this.mode = mode;
 }
 
 Grid.prototype.initMatrix = function (nbCols, nbRows) {
@@ -50,7 +50,35 @@ Grid.prototype.generateMatrix = function (nbCols, nbRows) {
     return arr;
 };
 
-
+Grid.prototype.changePayoff = function(selectedVar){
+    switch (selectedVar){
+        case TMINUS:
+            this.t--;
+            break;
+        case TPLUS:
+            this.t++;
+            break;
+        case RMINUS:
+            this.r--;
+            break;
+        case RPLUS:
+            this.r++;
+            break;
+        case PMINUS:
+            this.p--;
+            break;
+        case PPLUS:
+            this.p++;
+            break;
+        case SMINUS:
+            this.s--;
+            break;
+        case SPLUS:
+            this.s++;
+            break;
+    }
+    this.initMatrix(this.nbCols, this.nbRows);
+};
 
 Grid.prototype.cleanCount = function () {
     this.nbCoops = 0;
@@ -62,8 +90,6 @@ Grid.prototype.doDefect = function (x, y) {
 
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
-
-    // var key = this.coordsToKey(x, y);
 
     delete this.cellMatrix[x][y];
 };
@@ -78,53 +104,6 @@ Grid.prototype.doCooperate = function (x, y) {
     this.cellMatrix[x][y].setState(COOPSTATE);
 };
 
-
-Grid.prototype.coordsToKey = function (x, y) {
-    console.assert(Number.isInteger(x), x);
-    console.assert(Number.isInteger(y), y);
-    console.assert((0 <= x) && (x < this.getNbCols()), x);
-    console.assert((0 <= y) && (y < this.getNbRows()), y);
-
-    return x + "," + y;
-};
-
-
-Grid.prototype.getAliveAndNeighborsCells = function () {
-    "use strict";
-// TODO refactoring, this is not adapted here
-    // Builds a set of all "x,y" that are cooperate cells or their neighbors
-    var set = {};  // associative array used like as set of keys
-    var key;
-    var x;
-    var y;
-    var neighborX;
-    var neighborY;
-
-    for (key in this.cooperatingCells) {
-        key = this.keyToCoords(key);
-        x = key[0];
-        y = key[1];
-
-        // For each neighbor of cell (x, y)
-        for (neighborY = this.getFloorY(y); neighborY <= this.getCeilY(y); ++neighborY) {
-            for (neighborX = this.getFloorX(x); neighborX <= this.getCeilX(x); ++neighborX) {
-                set[this.coordsToKey(neighborX, neighborY)] = null;
-            }
-        }
-    }
-
-
-    // Converts set to an array of [x, y]
-    var cells = [];
-
-    for (key in set) {
-        cells.push(this.keyToCoords(key));
-    }
-
-    return cells;
-};
-
-
 Grid.prototype.getCeilX = function (x) {
     "use strict";
 
@@ -138,34 +117,11 @@ Grid.prototype.getCeilY = function (y) {
     return Math.min(this.nbRows - 1, y + 1);
 };
 
-
-Grid.prototype.getCellsToBeReversed = function () {
-    "use strict";
-
-    var cells = this.getAliveAndNeighborsCells();
-    var i;
-    var x;
-    var y;
-    var cellsToBeReversed = [];
-
-    for (i = 0; i < cells.length; ++i) {
-        x = cells[i][0];
-        y = cells[i][1];
-        if (this.hasToCooperate(x, y) !== this.cooperate(x, y)) {
-            cellsToBeReversed.push([x, y]);
-        }
-    }
-
-    return cellsToBeReversed;
-};
-
-
 Grid.prototype.getFloorX = function (x) {
     "use strict";
 
     return Math.max(0, x - 1);
 };
-
 
 Grid.prototype.getFloorY = function (y) {
     "use strict";
@@ -188,23 +144,6 @@ Grid.prototype.getNbRows = function () {
 };
 
 
-/**
- * Return true if the neighbour with highest score is cooperating
- * false otherwise
- *
- */
-Grid.prototype.hasToCooperate = function (x, y) {
-    "use strict";
-
-    console.assert(Number.isInteger(x), x);
-    console.assert(Number.isInteger(y), y);
-
-    var nb = this.betterNeighbor(x, y);
-
-    return (nb === 3) || (nb === 2 && this.cooperate(x, y));
-};
-
-
 Grid.prototype.cooperate = function (x, y) {
     "use strict";
 
@@ -214,22 +153,26 @@ Grid.prototype.cooperate = function (x, y) {
     return (this.cellMatrix[x][y].state == COOPSTATE);
 };
 
-//
-// Grid.prototype.keyToCoords = function (key) {
-//     console.assert(typeof key === "string");
-//
-//     key = key.split(",");
-//
-//     console.assert(key.length === 2);
-//
-//     var x = parseInt(key[0], 10);
-//     var y = parseInt(key[1], 10);
-//
-//     console.assert((0 <= x) && (x < this.getNbCols()), x);
-//     console.assert((0 <= y) && (y < this.getNbRows()), y);
-//
-//     return [x, y];
-// };
+/**
+ * Compute the scores for all cell in the matrix.
+ */
+Grid.prototype.computeScores = function () {
+    "use strict";
+
+    var i;
+    var j;
+    for(i=0; i < this.nbCols; i++){
+        for(j=0; j < this.nbRows; j++){
+            this.cellMatrix[i][j].score = this.computeScore(x, y);
+        }
+    }
+};
+
+Grid.prototype.computeScore = function (x, y) {
+    "use strict";
+
+
+};
 
 
 Grid.prototype.betterNeighbor = function (x, y) {
@@ -239,19 +182,21 @@ Grid.prototype.betterNeighbor = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    var nb = 0;
+    var maxi = 0;
+    var action = NOACTION;
     var i;
     var j;
 
     for (j = this.getFloorY(y); j <= this.getCeilY(y); ++j) {
         for (i = this.getFloorX(x); i <= this.getCeilX(x); ++i) {
-            if ((i !== x || j !== y) && this.cooperate(i, j)) {
-                ++nb;
+            if ((i !== x || j !== y) && this.cellMatrix[x][y].score > maxi) {
+                maxi = this.cellMatrix[x][y].score;
+                action = this.cellMatrix[x][y].state;
             }
         }
     }
 
-    return nb;
+    return action;
 };
 
 
@@ -294,4 +239,10 @@ Grid.prototype.setDim = function (nbCols, nbRows) {
 
     this.nbCols = nbCols;
     this.nbRows = nbRows;
+    this.initMatrix(nbCols, nbRows);
+};
+
+Grid.prototype.setMode = function (newMode) {
+    this.mode = newMode;
+    this.initMatrix(this.nbCols, this.nbRows);
 };
