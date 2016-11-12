@@ -141,10 +141,10 @@ var SPLUS = 8;
                 },
                 false);
 
-        document.getElementById("printNbNeighborsAliveButton")
+        document.getElementById("printScoresButton")
             .addEventListener("click",
                 function () {
-                    prisonner.controller.model.printNbCooperatingNeighbors();
+                    prisonner.controller.model.printScores();
                 },
                 false);
     }

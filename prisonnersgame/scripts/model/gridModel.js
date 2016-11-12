@@ -214,22 +214,22 @@ Grid.prototype.cooperate = function (x, y) {
     return (this.cellMatrix[x][y].state == COOPSTATE);
 };
 
-
-Grid.prototype.keyToCoords = function (key) {
-    console.assert(typeof key === "string");
-
-    key = key.split(",");
-
-    console.assert(key.length === 2);
-
-    var x = parseInt(key[0], 10);
-    var y = parseInt(key[1], 10);
-
-    console.assert((0 <= x) && (x < this.getNbCols()), x);
-    console.assert((0 <= y) && (y < this.getNbRows()), y);
-
-    return [x, y];
-};
+//
+// Grid.prototype.keyToCoords = function (key) {
+//     console.assert(typeof key === "string");
+//
+//     key = key.split(",");
+//
+//     console.assert(key.length === 2);
+//
+//     var x = parseInt(key[0], 10);
+//     var y = parseInt(key[1], 10);
+//
+//     console.assert((0 <= x) && (x < this.getNbCols()), x);
+//     console.assert((0 <= y) && (y < this.getNbRows()), y);
+//
+//     return [x, y];
+// };
 
 
 Grid.prototype.betterNeighbor = function (x, y) {
@@ -271,7 +271,7 @@ Grid.prototype.printMatrix = function () {
     }
 };
 
-Grid.prototype.printNbCooperatingNeighbors = function () {
+Grid.prototype.printScores = function () {
     "use strict";
 
     var x;
@@ -282,8 +282,7 @@ Grid.prototype.printNbCooperatingNeighbors = function () {
     for (y = 0; y < this.getNbRows(); ++y) {
         line = (y < 10 ? " " : "") + y + "|";
         for (x = 0; x < this.getNbCols(); ++x) {
-            nb = this.betterNeighbor(x, y);
-            line += (nb > 0 ? this.betterNeighbor(x, y) : ".");
+            line += (this.cellMatrix[x][y].score + "-");
         }
         console.log(line);
     }
