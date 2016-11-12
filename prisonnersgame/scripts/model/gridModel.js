@@ -211,9 +211,7 @@ Grid.prototype.cooperate = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    var key = this.coordsToKey(x, y);
-
-    return (key in this.cooperatingCells);
+    return (this.cellMatrix[x][y].state == COOPSTATE);
 };
 
 
