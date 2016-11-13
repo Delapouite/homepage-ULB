@@ -83,6 +83,7 @@ GridController.prototype.modifPayoff = function (selectedVar) {
 
 GridController.prototype.load = function () {
     this.view.tableRefresh(this.turn);
+    this.view.modeRefresh();
 };
 
 GridController.prototype.createGrid = function () {

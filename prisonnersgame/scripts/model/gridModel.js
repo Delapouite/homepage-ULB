@@ -177,12 +177,36 @@ Grid.prototype.computeScores = function () {
     }
 };
 
+Grid.prototype.isMooreMode = function () {
+    return this.mode == MOORE;
+};
+
 Grid.prototype.computeScore = function (x, y) {
+    "use strict";
+
+    if(this.isMooreMode()){
+        return this.computeScoreMoore(x, y);
+    } else {
+        return this.computeScoreVonNeumann(x, y);
+    }
+};
+
+Grid.prototype.computeScoreMoore = function (x, y) {
+    "use strict";
+
+    var i;
+    var j;
+    for(i= (x-1) % this.nbCols; i % this.nbCols < (i+1) % this.nbCols; i = (i + 1) % this.nbCols){
+        console.log("print i" + i);
+    }
+
+};
+
+Grid.prototype.computeScoreVonNeumann = function (x, y) {
     "use strict";
 
 
 };
-
 
 Grid.prototype.betterNeighbor = function (x, y) {
     // TODO refactorign total
