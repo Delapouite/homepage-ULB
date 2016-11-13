@@ -191,15 +191,39 @@ Grid.prototype.computeScore = function (x, y) {
     }
 };
 
+Number.prototype.mod = function(n) {
+    var m = (( this % n) + n) % n;
+    return m < 0 ? m + Math.abs(n) : m;
+};
+
 Grid.prototype.computeScoreMoore = function (x, y) {
     "use strict";
 
-    var i;
-    var j;
-    for(i= (x-1) % this.nbCols; i % this.nbCols < (i+1) % this.nbCols; i = (i + 1) % this.nbCols){
-        console.log("print i" + i);
+    for(var countx = -1; countx <= 1; countx++){
+        for(var county = -1; county <= 1; county++){
+            if (!(countx == 0 && county == 0)){
+            // console.log("print i" + ((i + countx).mod(this.nbCols)) + " and " + "print j" + ((j + county).mod(this.nbRows)));
+                this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y], this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)]));
+                console.log("cell xy: "+x+":"+y+ this.getScore(this.cellMatrix[x][y], this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)]));
+            }
+        }
     }
+};
 
+Grid.prototype.getScore = function (action1, action2) {
+    if(action1 == COOPSTATE){
+        if(action2 == COOPSTATE){
+            return this.r;
+        } else { // player 2 defects
+            return this.s;
+        }
+    } else { // player 1 defects
+        if(action2 == COOPSTATE){
+            return this.t;
+        } else {
+            return this.p;
+        }
+    }
 };
 
 Grid.prototype.computeScoreVonNeumann = function (x, y) {
