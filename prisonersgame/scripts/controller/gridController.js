@@ -18,8 +18,7 @@ GridController.prototype.nextStep = function () {
     // 1 - calculer les nouveaux scores
     this.model.computeScores();
     // 2 - calculer les nouvelles actions
-    this.model = this.model.computeActions();
-    console.log("ça passe jusqu'ici");
+    this.model = this.model.computeNewGrid();
     // 3 - mettre à jour...
     this.turn++;
     this.update();

@@ -135,7 +135,6 @@ GridView.prototype.update = function () {
 
     var x;
     var y;
-
     for (y = 0; y < this.gridModel.getNbRows(); ++y) {
         for (x = 0; x < this.gridModel.getNbCols(); ++x) {
             if(this.gridModel.cellMatrix[x][y].action == COOPSTATE){
@@ -143,6 +142,7 @@ GridView.prototype.update = function () {
             } else {
                 this.doDefect(x, y);
             }
+            console.log(x+":"+y+" action : " + this.gridModel.cellMatrix[x][y].action);
 
         }
     }

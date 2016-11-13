@@ -211,7 +211,7 @@ Grid.prototype.computeScoreVonNeumann = function (x, y) {
     this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action));
 };
 
-Grid.prototype.computeActions = function () {
+Grid.prototype.computeNewGrid = function () {
     "use strict";
     var newGrid = new Grid(this.nbCols, this.nbRows, this.t , this.r, this.p, this.s, this.mode);
     for(var x=0; x < this.nbCols; x++){
