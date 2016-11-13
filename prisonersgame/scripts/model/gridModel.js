@@ -28,7 +28,7 @@ Grid.prototype.initMatrix = function (nbCols, nbRows) {
             } else {
                 this.nbDefect++;
             }
-            this.cellMatrix[i][j].setState(state);
+            this.cellMatrix[i][j].setAction(state);
         }
     }
 };
@@ -110,7 +110,7 @@ Grid.prototype.doCooperate = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    this.cellMatrix[x][y].setState(COOPSTATE);
+    this.cellMatrix[x][y].setAction(COOPSTATE);
 };
 
 Grid.prototype.getCeilX = function (x) {
@@ -159,7 +159,7 @@ Grid.prototype.cooperate = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    return (this.cellMatrix[x][y].state == COOPSTATE);
+    return (this.cellMatrix[x][y].action == COOPSTATE);
 };
 
 /**
@@ -167,12 +167,12 @@ Grid.prototype.cooperate = function (x, y) {
  */
 Grid.prototype.computeScores = function () {
     "use strict";
-// TODO Priority on the development of this part
+
     var x;
     var y;
     for(x=0; x < this.nbCols; x++){
         for(y=0; y < this.nbRows; y++){
-            this.cellMatrix[x][y].score = this.computeScore(x, y);
+            this.computeScore(x, y);
         }
     }
 };
@@ -185,9 +185,9 @@ Grid.prototype.computeScore = function (x, y) {
     "use strict";
 
     if(this.isMooreMode()){
-        return this.computeScoreMoore(x, y);
+        this.computeScoreMoore(x, y);
     } else {
-        return this.computeScoreVonNeumann(x, y);
+        this.computeScoreVonNeumann(x, y);
     }
 };
 
@@ -202,15 +202,16 @@ Grid.prototype.computeScoreMoore = function (x, y) {
     for(var countx = -1; countx <= 1; countx++){
         for(var county = -1; county <= 1; county++){
             if (!(countx == 0 && county == 0)){
-            // console.log("print i" + ((i + countx).mod(this.nbCols)) + " and " + "print j" + ((j + county).mod(this.nbRows)));
-                this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y], this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)]));
-                console.log("cell xy: "+x+":"+y+ this.getScore(this.cellMatrix[x][y], this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)]));
+                this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].action));
+                // console.log("cell xy: "+x+":"+y+ "-> " + this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].action));
             }
         }
     }
 };
 
 Grid.prototype.getScore = function (action1, action2) {
+    "use strict";
+
     if(action1 == COOPSTATE){
         if(action2 == COOPSTATE){
             return this.r;
@@ -229,7 +230,10 @@ Grid.prototype.getScore = function (action1, action2) {
 Grid.prototype.computeScoreVonNeumann = function (x, y) {
     "use strict";
 
-
+    this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action));
+    this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action));
+    this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[x][(y + 1).mod(this.nbRows)].action));
+    this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action));
 };
 
 Grid.prototype.betterNeighbor = function (x, y) {
@@ -248,7 +252,7 @@ Grid.prototype.betterNeighbor = function (x, y) {
         for (i = this.getFloorX(x); i <= this.getCeilX(x); ++i) {
             if ((i !== x || j !== y) && this.cellMatrix[x][y].score > maxi) {
                 maxi = this.cellMatrix[x][y].score;
-                action = this.cellMatrix[x][y].state;
+                action = this.cellMatrix[x][y].action;
             }
         }
     }
@@ -267,7 +271,7 @@ Grid.prototype.printMatrix = function () {
     for (y = 0; y < this.getNbRows(); ++y) {
         line = (y < 10 ? " " : "") + y + "|";
         for (x = 0; x < this.getNbCols(); ++x) {
-            line += (this.cooperate(x, y) ? "x" : ".");
+            line += (this.cooperate(x, y) ? "c" : "d");
         }
         console.log(line);
     }

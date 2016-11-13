@@ -139,7 +139,7 @@ GridView.prototype.update = function () {
 
     for (y = 0; y < this.gridModel.getNbRows(); ++y) {
         for (x = 0; x < this.gridModel.getNbCols(); ++x) {
-            if(this.gridModel.cellMatrix[x][y].state == COOPSTATE){
+            if(this.gridModel.cellMatrix[x][y].action == COOPSTATE){
                 this.doCooperate(x, y);
             } else {
                 this.doDefect(x, y);
