@@ -18,8 +18,10 @@ GridController.prototype.nextStep = function () {
     // 1 - calculer les nouveaux scores
     this.model.computeScores();
     // 2 - calculer les nouvelles actions
-    this.model.computeActions();
+    this.model = this.model.computeActions();
+    console.log("ça passe jusqu'ici");
     // 3 - mettre à jour...
+    this.turn++;
     this.update();
 
 };

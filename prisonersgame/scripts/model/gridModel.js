@@ -113,31 +113,6 @@ Grid.prototype.doCooperate = function (x, y) {
     this.cellMatrix[x][y].setAction(COOPSTATE);
 };
 
-Grid.prototype.getCeilX = function (x) {
-    "use strict";
-
-    return Math.min(this.nbCols - 1, x + 1);
-};
-
-
-Grid.prototype.getCeilY = function (y) {
-    "use strict";
-
-    return Math.min(this.nbRows - 1, y + 1);
-};
-
-Grid.prototype.getFloorX = function (x) {
-    "use strict";
-
-    return Math.max(0, x - 1);
-};
-
-Grid.prototype.getFloorY = function (y) {
-    "use strict";
-
-    return Math.max(0, y - 1);
-};
-
 
 Grid.prototype.getNbCols = function () {
     "use strict";
@@ -236,30 +211,53 @@ Grid.prototype.computeScoreVonNeumann = function (x, y) {
     this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action));
 };
 
-Grid.prototype.betterNeighbor = function (x, y) {
-    // TODO refactorign total
+Grid.prototype.computeActions = function () {
+    "use strict";
+    var newGrid = new Grid(this.nbCols, this.nbRows, this.t , this.r, this.p, this.s, this.mode);
+    for(var x=0; x < this.nbCols; x++){
+        for(var y=0; y < this.nbRows; y++){
+            newGrid.cellMatrix[x][y].action = this.getBestNeighborAction(x, y);
+        }
+    }
+    return newGrid;
+};
+
+
+Grid.prototype.getBestNeighborAction = function (x, y) {
     "use strict";
 
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    var maxi = 0;
+    var maxi = -80000; // infini
     var action = NOACTION;
-    var i;
-    var j;
-
-    for (j = this.getFloorY(y); j <= this.getCeilY(y); ++j) {
-        for (i = this.getFloorX(x); i <= this.getCeilX(x); ++i) {
-            if ((i !== x || j !== y) && this.cellMatrix[x][y].score > maxi) {
-                maxi = this.cellMatrix[x][y].score;
-                action = this.cellMatrix[x][y].action;
+    if(this.isMooreMode()){
+        for(var countx = -1; countx <= 1; countx++){
+            for(var county = -1; county <= 1; county++){
+                if(this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].score > maxi){
+                    maxi = this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].score;
+                    action = this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].action;
+                }
             }
         }
+    } else { // vn mode
+        [maxi, action] = [this.cellMatrix[x][y].score, this.cellMatrix[x][y].action];
+        [maxi, action] = this.compareNeibVN(this.cellMatrix[(x - 1).mod(this.nbCols)][y].score, maxi, action, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action);
+        [maxi, action] = this.compareNeibVN(this.cellMatrix[x][(y - 1).mod(this.nbRows)].score, maxi, action, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action);
+        [maxi, action] = this.compareNeibVN(this.cellMatrix[x][(y + 1).mod(this.nbRows)].score, maxi, action, this.cellMatrix[x][(y + 1).mod(this.nbRows)].action);
+        [maxi, action] = this.compareNeibVN(this.cellMatrix[(x + 1).mod(this.nbCols)][y].score, maxi, action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action);
     }
-
+    // console.log("getBestNeighborAction x y" + x +":" + y + ":::" + action);
     return action;
 };
 
+Grid.prototype.compareNeibVN = function (score1, score2, action1, action2) {
+    if(score2 > score1){
+        return action2;
+    } else {
+        return action1;
+    }
+};
 
 Grid.prototype.printMatrix = function () {
     "use strict";

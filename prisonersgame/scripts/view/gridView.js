@@ -133,7 +133,6 @@ GridView.prototype.modeRefresh = function () {
 GridView.prototype.update = function () {
     "use strict";
 
-    var ctx = this.getContext();
     var x;
     var y;
 
@@ -148,7 +147,6 @@ GridView.prototype.update = function () {
         }
     }
     this.countRefresh();
-
 };
 
 
