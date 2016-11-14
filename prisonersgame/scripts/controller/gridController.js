@@ -18,11 +18,11 @@ GridController.prototype.nextStep = function () {
     // 1 - calculer les nouveaux scores
     this.model.computeScores();
     // 2 - calculer les nouvelles actions
-    this.model = this.model.computeNewGrid();
+    this.model.computeNewGrid();
+
     // 3 - mettre à jour...
     this.turn++;
     this.update();
-
 };
 
 
@@ -83,7 +83,8 @@ GridController.prototype.modifPayoff = function (selectedVar) {
 };
 
 GridController.prototype.load = function () {
-    this.view.tableRefresh(this.turn);
+    this.view.tableRefresh();
+    this.view.countRefresh(this.turn);
     this.view.modeRefresh();
 };
 
@@ -96,5 +97,6 @@ GridController.prototype.createGrid = function () {
 
 GridController.prototype.update = function () {
     this.view.update();
+    this.view.countRefresh(this.turn);
 };
 

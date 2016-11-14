@@ -118,10 +118,11 @@ GridView.prototype.resize = function () {
     canvas.setAttribute("height", this.gridModel.getNbRows() * this.cellSize);
 };
 
-GridView.prototype.countRefresh = function () {
+GridView.prototype.countRefresh = function (turn) {
     document.getElementById("coopContent").innerHTML = this.gridModel.nbCoops;
     document.getElementById("defectContent").innerHTML = this.gridModel.nbDefect;
     document.getElementById("rateContent").innerHTML = Math.round(this.gridModel.getRate()*100)/100;
+    document.getElementById("stepsContent").innerHTML = turn;
 };
 GridView.prototype.modeRefresh = function () {
     if(this.gridModel.mode == MOORE){
@@ -142,18 +143,14 @@ GridView.prototype.update = function () {
             } else {
                 this.doDefect(x, y);
             }
-            console.log(x+":"+y+" action : " + this.gridModel.cellMatrix[x][y].action);
-
         }
     }
-    this.countRefresh();
 };
 
 
-GridView.prototype.tableRefresh = function (turn) {
+GridView.prototype.tableRefresh = function () {
     document.getElementById("tContent").innerHTML = this.gridModel.t;
     document.getElementById("pContent").innerHTML = this.gridModel.p;
     document.getElementById("rContent").innerHTML = this.gridModel.r;
     document.getElementById("sContent").innerHTML = this.gridModel.s;
-    document.getElementById("stepsContent").innerHTML = turn;
 };

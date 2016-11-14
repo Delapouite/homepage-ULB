@@ -100,7 +100,8 @@ Grid.prototype.doDefect = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
-    delete this.cellMatrix[x][y];
+    this.nbDefect++;
+    this.cellMatrix[x][y].setAction(DEFECTSTATE);
 };
 
 
@@ -110,6 +111,7 @@ Grid.prototype.doCooperate = function (x, y) {
     console.assert(Number.isInteger(x), x);
     console.assert(Number.isInteger(y), y);
 
+    this.nbCoops++;
     this.cellMatrix[x][y].setAction(COOPSTATE);
 };
 
@@ -211,15 +213,25 @@ Grid.prototype.computeScoreVonNeumann = function (x, y) {
     this.cellMatrix[x][y].addScore(this.getScore(this.cellMatrix[x][y].action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action));
 };
 
+
 Grid.prototype.computeNewGrid = function () {
     "use strict";
-    var newGrid = new Grid(this.nbCols, this.nbRows, this.t , this.r, this.p, this.s, this.mode);
+
+    var temp;
+    var newMatrix = this.generateMatrix(this.nbCols, this.nbRows);
+    this.cleanCount();
     for(var x=0; x < this.nbCols; x++){
         for(var y=0; y < this.nbRows; y++){
-            newGrid.cellMatrix[x][y].action = this.getBestNeighborAction(x, y);
+            temp = this.getBestNeighborAction(x, y);
+            if(temp == COOPSTATE){
+                this.nbCoops++;
+            } else {
+                this.nbDefect++;
+            }
+            newMatrix[x][y].action = temp;
         }
     }
-    return newGrid;
+    this.cellMatrix = newMatrix;
 };
 
 
