@@ -265,9 +265,9 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
 
 Grid.prototype.compareNeibVN = function (score1, score2, action1, action2) {
     if(score2 > score1){
-        return action2;
+        return [score2, action2];
     } else {
-        return action1;
+        return [score1, action1];
     }
 };
 

@@ -26,23 +26,6 @@ GridController.prototype.nextStep = function () {
 };
 
 
-GridController.prototype.reverse = function (x, y) {
-    "use strict";
-
-    console.assert(Number.isInteger(x), x);
-    console.assert(Number.isInteger(y), y);
-
-    if (this.model.cooperate(x, y)) {
-        this.model.doDefect(x, y);
-        this.view.doDefect(x, y);
-    }
-    else {
-        this.model.doCooperate(x, y);
-        this.view.doCooperate(x, y);
-    }
-};
-
-
 GridController.prototype.setDim = function (x, y) {
     "use strict";
 
@@ -52,6 +35,8 @@ GridController.prototype.setDim = function (x, y) {
     this.model.setDim(x, y);
     this.view.resize();
     this.createGrid();
+    this.turn = 0;
+    this.view.countRefresh(this.turn);
     this.update();
 };
 
@@ -62,6 +47,8 @@ GridController.prototype.setMode = function (newMode) {
 
     this.setMode(newMode);
     this.createGrid();
+    this.turn = 0;
+    this.view.countRefresh(this.turn);
     this.update();
 };
 
@@ -70,6 +57,8 @@ GridController.prototype.changeMode = function () {
 
     this.model.xchangeMode();
     this.view.modeRefresh();
+    this.turn = 0;
+    this.view.countRefresh(this.turn);
     this.update();
 };
 
@@ -79,6 +68,8 @@ GridController.prototype.modifPayoff = function (selectedVar) {
     console.assert(Number.isInteger(selectedVar), selectedVar);
     this.model.changePayoff(selectedVar);
     this.view.tableRefresh();
+    this.turn = 0;
+    this.view.countRefresh(this.turn);
     this.update();
 };
 
