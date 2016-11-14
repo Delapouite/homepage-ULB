@@ -253,6 +253,7 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
             }
         }
     } else { // vn mode
+        // choisir au hasard parmi les meilleures, sinon model non random... faux.
         [maxi, action] = [this.cellMatrix[x][y].score, this.cellMatrix[x][y].action];
         [maxi, action] = this.compareNeibVN(this.cellMatrix[(x - 1).mod(this.nbCols)][y].score, maxi, action, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action);
         [maxi, action] = this.compareNeibVN(this.cellMatrix[x][(y - 1).mod(this.nbRows)].score, maxi, action, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action);
@@ -264,10 +265,12 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
 };
 
 Grid.prototype.compareNeibVN = function (score1, score2, action1, action2) {
-    if(score2 > score1){
-        return [score2, action2];
-    } else {
+    "use strict";
+
+    if(score1 > score2){
         return [score1, action1];
+    } else {
+        return [score2, action2];
     }
 };
 
