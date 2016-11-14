@@ -75,7 +75,7 @@ GridController.prototype.modifPayoff = function (selectedVar) {
 
 GridController.prototype.load = function () {
     this.view.tableRefresh();
-    this.view.countRefresh(this.turn);
+    // this.view.countRefresh(this.turn);
     this.view.modeRefresh();
 };
 
