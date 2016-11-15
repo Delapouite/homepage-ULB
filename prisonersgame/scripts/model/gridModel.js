@@ -229,6 +229,7 @@ Grid.prototype.computeNewGrid = function () {
                 this.nbDefect++;
             }
             newMatrix[x][y].action = temp;
+            newMatrix[x][y].score = this.cellMatrix[x][y].score; // to get memory. Last score, not next
         }
     }
     this.cellMatrix = newMatrix;
@@ -243,24 +244,46 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
 
     var maxi = -80000; // infini
     var action = NOACTION;
+    var array_result = [];
     if(this.isMooreMode()){
         for(var countx = -1; countx <= 1; countx++){
             for(var county = -1; county <= 1; county++){
                 if(this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].score > maxi){
                     maxi = this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].score;
                     action = this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].action;
+                    array_result = []; // clear
+                    array_result.push(action);
+                } else if (this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].score == maxi){
+                    array_result.push(this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].action);
                 }
             }
         }
     } else { // vn mode
         // choisir au hasard parmi les meilleures, sinon model non random... faux.
-        [maxi, action] = [this.cellMatrix[x][y].score, this.cellMatrix[x][y].action];
-        [maxi, action] = this.compareNeibVN(this.cellMatrix[(x - 1).mod(this.nbCols)][y].score, maxi, action, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action);
-        [maxi, action] = this.compareNeibVN(this.cellMatrix[x][(y - 1).mod(this.nbRows)].score, maxi, action, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action);
-        [maxi, action] = this.compareNeibVN(this.cellMatrix[x][(y + 1).mod(this.nbRows)].score, maxi, action, this.cellMatrix[x][(y + 1).mod(this.nbRows)].action);
-        [maxi, action] = this.compareNeibVN(this.cellMatrix[(x + 1).mod(this.nbCols)][y].score, maxi, action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action);
+
+        var toTest = [];
+        toTest.push([this.cellMatrix[x][y].score, this.cellMatrix[x][y].action]);
+        toTest.push([this.cellMatrix[(x - 1).mod(this.nbCols)][y].score, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action]);
+        toTest.push([this.cellMatrix[x][(y - 1).mod(this.nbRows)].score, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action]);
+        toTest.push([this.cellMatrix[x][(y + 1).mod(this.nbRows)].score, this.cellMatrix[x][(y + 1).mod(this.nbRows)].action]);
+        toTest.push([this.cellMatrix[(x + 1).mod(this.nbCols)][y].score, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action]);
+
+        for(var i=0 ; i < toTest.length; i++){
+            // console.log("elem " + toTest[i]);
+            if(toTest[i][0] > maxi) {
+                array_result = [];
+                array_result.push(toTest[i][1]); // push the action
+                maxi = toTest[i][0];
+            } else if (toTest[i][0] == maxi){
+                array_result.push(toTest[i][1]);
+            }
+        }
     }
     // console.log("getBestNeighborAction x y" + x +":" + y + ":::" + action);
+
+    // console.log(("array result lengh :" + array_result.length));
+    action = array_result[Math.floor(Math.random()*array_result.length)];
+    // console.log(("action choice :" + action));
     return action;
 };
 

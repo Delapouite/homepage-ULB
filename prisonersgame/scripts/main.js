@@ -173,8 +173,8 @@ var VN = 2;
             prisonner.controller.update();
 //             // set interface table
             prisonner.controller.load();
-
             setListeners();
+//  set canvas plot function
         },
         false);
 }());
