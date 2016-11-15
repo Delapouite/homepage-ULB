@@ -229,7 +229,7 @@ Grid.prototype.computeNewGrid = function () {
                 this.nbDefect++;
             }
             newMatrix[x][y].action = temp;
-            newMatrix[x][y].score = this.cellMatrix[x][y].score; // to get memory. Last score, not next
+            // newMatrix[x][y].score = this.cellMatrix[x][y].score; // to get memory. Last score, not next
         }
     }
     this.cellMatrix = newMatrix;
