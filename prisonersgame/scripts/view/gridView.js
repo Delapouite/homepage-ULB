@@ -168,25 +168,73 @@ GridView.prototype.setExpeResults = function (results) {
             avgTot[j] += results[i][j];
         }
         avgTot[j] = avgTot[j]/results.length;
-        console.log("avg" + avgTot[j]);
     }
     var resultClass = [];
     for(var i=0; i < 10; i++){
         resultClass.push(0); // init class distribution
     }
     for(var i=0; i < results.length; i++){
-        resultClass[Math.floor(results[i][100]*10)]++;
+        resultClass[Math.floor(results[i][99]*10)]++;
     }
 
-    for(var i=0; i < 10; i++){
-        console.log("end" + i +" à "+ (i+10) + " : " + resultClass[i]);
-    }
 
     // construire les diagrams
+    var averageDiv = document.createElement("div");
+    averageDiv.setAttribute("id", "histogram");
+    document.getElementById("canvas").replaceChild(averageDiv, this.canvas);
+    this.canvas = averageDiv;
+    var counter = [];
+    for(var i=0; i <100; i++){
+        counter.push(i);
+    }
+    Plotly.plot( averageDiv, [{
+        x: counter,
+        y: avgTot }], {
+        margin: { t: 0 } } );
 
+    // second histogram, classes
+    var xValue = ['0-10', '10-20', '20-30', '30-40', '40-50', '50-60', '60-70', '70-80', '80-90', '90-100'];
+    var yValue = resultClass;
 
-    // une fois le canvas fait, il suffit de proposer un lien pour le voir en image, pour pouvoir
-    // la dll proprement et mettre ça dans le rapport
-    // window.location = this.canvas.toDataURL("image/png");
+    var trace1 = {
+        x: xValue,
+        y: yValue,
+        type: 'bar',
+        marker: {
+            color: 'rgb(158,202,225)',
+            opacity: 0.6,
+            line: {
+                color: 'rbg(8,48,107)',
+                width: 1.5
+            }
+        }
+    };
 
+    var annotationContent = [];
+
+    data = [trace1];
+
+    layout = {
+        title: 'Class of results at ~ 100 steps',
+        annotations: annotationContent
+    };
+
+    for( var i = 0 ; i < xValue.length ; i++ ){
+        var result = {
+            x: xValue[i],
+            y: yValue[i],
+            text: yValue[i],
+            xanchor: 'center',
+            yanchor: 'bottom',
+            showarrow: false
+        };
+        annotationContent.push(result);
+    }
+
+    var endDiv = document.createElement("div");
+    endDiv.setAttribute("id", "endDiv");
+    document.getElementById("canvas").appendChild(endDiv);
+    this.canvas2 = endDiv;
+
+    Plotly.newPlot('endDiv', data, layout);
 };
