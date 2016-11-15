@@ -147,10 +147,10 @@ var VN = 2;
                 },
                 false);
 
-        document.getElementById("printScoresButton")
+        document.getElementById("experiment")
             .addEventListener("click",
                 function () {
-                    prisonner.controller.model.printScores();
+                    prisonner.controller.experiment();
                 },
                 false);
 

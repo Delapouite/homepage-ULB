@@ -91,3 +91,19 @@ GridController.prototype.update = function () {
     this.view.countRefresh(this.turn);
 };
 
+GridController.prototype.experiment = function () {
+    console.log("perform an experiment an plot functions");
+    var results = [];
+    for(var i=0; i <= 100; i++){
+        var result = [];
+        var currentGrid = new Grid(this.model.nbCols, this.model.nbRows, this.model.t, this.model.r, this.model.p, this.model.s, this.model.mode);
+        for(var j=0; j <= 100; j++){
+            result.push(currentGrid.getRate());
+            currentGrid.computeScores();
+            currentGrid.computeNewGrid();
+        }
+        results.push(result);
+    }
+
+    this.view.setExpeResults(results);
+};

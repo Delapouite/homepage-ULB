@@ -18,7 +18,7 @@ function GridView(prisonnerGame, gridModel, nbCols, nbRows) {
         //     },
         //     false);
         // Dans ce projet, on n'a pas besoin de changer soi-même, c'est fait random
-        // pourrait être une option mais plus tard...
+        // TODO qd on clique, on a le score de cette case
 
         document.getElementById("canvas").appendChild(canvas);
 
@@ -153,4 +153,40 @@ GridView.prototype.tableRefresh = function () {
     document.getElementById("pContent").innerHTML = this.gridModel.p;
     document.getElementById("rContent").innerHTML = this.gridModel.r;
     document.getElementById("sContent").innerHTML = this.gridModel.s;
+};
+
+
+GridView.prototype.setExpeResults = function (results) {
+    var avgTot = [];
+    console.log("display results");
+    for(var i=0; i < results.length; i++){
+        avgTot.push(0);
+    } // init array avec des 0. FIXME sans doute moyen de faire plus joli :/
+
+    for(var j=0; j < results.length; j++){
+        for(var i=0; i < results[j].length; i++){
+            avgTot[j] += results[i][j];
+        }
+        avgTot[j] = avgTot[j]/results.length;
+        console.log("avg" + avgTot[j]);
+    }
+    var resultClass = [];
+    for(var i=0; i < 10; i++){
+        resultClass.push(0); // init class distribution
+    }
+    for(var i=0; i < results.length; i++){
+        resultClass[Math.floor(results[i][100]*10)]++;
+    }
+
+    for(var i=0; i < 10; i++){
+        console.log("end" + i +" à "+ (i+10) + " : " + resultClass[i]);
+    }
+
+    // construire les diagrams
+
+
+    // une fois le canvas fait, il suffit de proposer un lien pour le voir en image, pour pouvoir
+    // la dll proprement et mettre ça dans le rapport
+    // window.location = this.canvas.toDataURL("image/png");
+
 };
