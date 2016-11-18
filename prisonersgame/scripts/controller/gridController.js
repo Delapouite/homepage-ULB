@@ -89,6 +89,7 @@ GridController.prototype.createGrid = function () {
 GridController.prototype.update = function () {
     this.view.update();
     this.view.countRefresh(this.turn);
+    this.view.makeImg();
 };
 
 GridController.prototype.experiment = function () {

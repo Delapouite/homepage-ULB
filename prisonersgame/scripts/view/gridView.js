@@ -238,3 +238,9 @@ GridView.prototype.setExpeResults = function (results) {
 
     Plotly.newPlot('endDiv', data, layout);
 };
+
+GridView.prototype.makeImg = function () {
+    var img    = this.canvas.toDataURL("image/png");
+    var link = "<a href="+img+">grid in png</a>";
+    document.getElementById("imgGrid").innerHTML = link;
+};
