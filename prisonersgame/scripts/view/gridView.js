@@ -174,7 +174,11 @@ GridView.prototype.setExpeResults = function (results) {
         resultClass.push(0); // init class distribution
     }
     for(var i=0; i < results.length; i++){
-        resultClass[Math.floor(results[i][99]*10)]++;
+        if(results[i][99] == 1){
+            resultClass[9]++;
+        } else {
+            resultClass[Math.floor(results[i][99]*10)]++;
+        }
     }
 
 
