@@ -12,8 +12,11 @@ var PPLUS = 6;
 var SMINUS = 7;
 var SPLUS = 8;
 //mode
-var MOORE = 1;
-var VN = 2;
+var MOORE = 8;
+var VN = 4;
+// imitation mode
+var UNCOND = 1;
+var FUNC = 2;
 
 (function () {
     "use strict";
@@ -29,13 +32,14 @@ var VN = 2;
     var DEFAULT_S = 0;
     // mode vars
     var DEFAULT_MODE = MOORE;
+    var DEFAULT_IMIT_MODE = UNCOND;
 
     var prisonner;
 
 
 
     function CreateWindow() {
-        var grid = new Grid(DEFAULT_NB_COLS, DEFAULT_NB_ROWS, DEFAULT_T, DEFAULT_R, DEFAULT_P, DEFAULT_S, DEFAULT_MODE);
+        var grid = new Grid(DEFAULT_NB_COLS, DEFAULT_NB_ROWS, DEFAULT_T, DEFAULT_R, DEFAULT_P, DEFAULT_S, DEFAULT_MODE, DEFAULT_IMIT_MODE);
         var view = new GridView(this, grid, DEFAULT_NB_COLS, DEFAULT_NB_ROWS);
 
         this.controller = new GridController(grid, view);
@@ -161,6 +165,12 @@ var VN = 2;
                 },
                 false);
 
+        document.getElementById("partButton")
+            .addEventListener("click",
+                function () {
+                    prisonner.controller.changeImitMode();
+                },
+                false);
     }
 
 

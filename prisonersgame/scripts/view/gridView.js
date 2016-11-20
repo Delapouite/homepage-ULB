@@ -129,7 +129,14 @@ GridView.prototype.modeRefresh = function () {
         document.getElementById("modeContent").innerHTML = "Moore";
     } else {
         document.getElementById("modeContent").innerHTML = "VN";
-    }};
+    }
+    if(this.gridModel.imitationMode == UNCOND){
+        document.getElementById("partContent").innerHTML = "Uncond. imit.";
+    } else {
+        document.getElementById("partContent").innerHTML = "Function imit.";
+    }
+
+};
 
 GridView.prototype.update = function () {
     "use strict";

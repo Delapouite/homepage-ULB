@@ -52,15 +52,30 @@ GridController.prototype.setMode = function (newMode) {
     this.update();
 };
 
-GridController.prototype.changeMode = function () {
+GridController.prototype.updateModes = function () {
     "use strict";
 
-    this.model.xchangeMode();
     this.view.modeRefresh();
     this.turn = 0;
     this.view.countRefresh(this.turn);
     this.update();
 };
+
+
+GridController.prototype.changeMode = function () {
+    "use strict";
+
+    this.model.xchangeMode();
+    this.updateModes();
+};
+
+GridController.prototype.changeImitMode = function () {
+    "use strict";
+
+    this.model.xchangeImitMode();
+    this.updateModes();
+};
+
 
 GridController.prototype.modifPayoff = function (selectedVar) {
     "use strict";
@@ -97,7 +112,7 @@ GridController.prototype.experiment = function () {
     var results = [];
     for(var i=0; i < 100; i++){
         var result = [];
-        var currentGrid = new Grid(this.model.nbCols, this.model.nbRows, this.model.t, this.model.r, this.model.p, this.model.s, this.model.mode);
+        var currentGrid = new Grid(this.model.nbCols, this.model.nbRows, this.model.t, this.model.r, this.model.p, this.model.s, this.model.mode, this.model.imitationMode);
         for(var j=0; j < 100; j++){
             result.push(currentGrid.getRate());
             currentGrid.computeScores();
