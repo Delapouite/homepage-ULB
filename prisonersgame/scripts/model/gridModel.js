@@ -25,7 +25,7 @@ Grid.prototype.initMatrix = function (nbCols, nbRows) {
     for (var i=0; i < nbCols; i++) {
         for(var j=0; j < nbRows; j++) {
             var state = Math.round(Math.random()+1);
-            if(state == COOPSTATE){
+            if(state === COOPSTATE){
                 this.nbCoops++;
             } else {
                 this.nbDefect++;
@@ -83,18 +83,19 @@ Grid.prototype.changePayoff = function(selectedVar){
 };
 
 Grid.prototype.xchangeMode = function () {
-    if(this.mode == MOORE){
+    if(this.mode === MOORE){
         this.mode = VN;
     } else {
         this.mode = MOORE;
     }
     this.initMatrix(this.nbCols, this.nbRows);
+
 };
 
 Grid.prototype.xchangeImitMode = function () {
     "use strict";
 
-    if(this.imitationMode == UNCOND){
+    if(this.imitationMode === UNCOND){
         this.imitationMode = FUNC;
     } else {
         this.imitationMode = UNCOND;
@@ -191,21 +192,20 @@ Grid.prototype.computeScoreMoore = function (x, y) {
     "use strict";
 
     // uncond. imit mode. add an if statement
-    if(this.imitationMode == UNCOND){
         for(var countx = -1; countx <= 1; countx++){
             for(var county = -1; county <= 1; county++){
-                if (!(countx == 0 && county == 0)){
+                if (!(countx === 0 && county === 0)){
                     this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[(x + countx).mod(this.nbCols)][(y + county).mod(this.nbRows)].action));
                 }
             }
         }
-    } else {
+    if(this.imitationMode == FUNC) {
         // select randomly ONE of the neighbors
 
         var adv = [];
-        for(var countx = -1; countx <= 1; countx++){
-            for(var county = -1; county <= 1; county++){
-                if (!(countx == 0 && county == 0)){
+        for(countx = -1; countx <= 1; countx++){
+            for(county = -1; county <= 1; county++){
+                if (!(countx === 0 && county === 0)){
                     adv.push([(x + countx).mod(this.nbCols), (y + county).mod(this.nbRows)]); // push the opponant
                 }
             }
@@ -231,14 +231,14 @@ Grid.prototype.getMinPayoff = function () {
 Grid.prototype.getScoreUncond = function (action1, action2) {
     "use strict";
 
-    if(action1 == COOPSTATE){
-        if(action2 == COOPSTATE){
+    if(action1 === COOPSTATE){
+        if(action2 === COOPSTATE){
             return this.r;
         } else { // player 2 defects
             return this.s;
         }
     } else { // player 1 defects
-        if(action2 == COOPSTATE){
+        if(action2 === COOPSTATE){
             return this.t;
         } else {
             return this.p;
@@ -249,12 +249,12 @@ Grid.prototype.getScoreUncond = function (action1, action2) {
 Grid.prototype.computeScoreVonNeumann = function (x, y) {
     "use strict";
 
-    if(this.imitationMode == UNCOND){
-        this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action));
-        this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action));
-        this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[x][(y + 1).mod(this.nbRows)].action));
-        this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action));
-    } else {
+
+    this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[(x - 1).mod(this.nbCols)][y].action));
+    this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[x][(y - 1).mod(this.nbRows)].action));
+    this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[x][(y + 1).mod(this.nbRows)].action));
+    this.cellMatrix[x][y].addScore(this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[(x + 1).mod(this.nbCols)][y].action));
+    if(this.imitationMode == FUNC){
         // select randomly ONE of the neighbors
 
         var adv = [];
@@ -266,7 +266,6 @@ Grid.prototype.computeScoreVonNeumann = function (x, y) {
         this.selectedNeighbor[x][y] = adv[Math.floor(Math.random() * adv.length)];
     }
 
-
 };
 
 
@@ -277,11 +276,11 @@ Grid.prototype.computeNewGrid = function () {
     var newMatrix = this.generateMatrix(this.nbCols, this.nbRows);
     this.cleanCount();
 
-    if(this.imitationMode == UNCOND){
+    if(this.imitationMode === UNCOND){
         for(var x=0; x < this.nbCols; x++){
             for(var y=0; y < this.nbRows; y++){
                 temp = this.getBestNeighborAction(x, y);
-                if(temp == COOPSTATE){
+                if(temp === COOPSTATE){
                     this.nbCoops++;
                 } else {
                     this.nbDefect++;
@@ -294,17 +293,18 @@ Grid.prototype.computeNewGrid = function () {
             for(y=0; y < this.nbRows; y++){
                 // adapt its action with a probability of Pij like below :
                 // P ij = ( 1 + [W j -W i ]/[N*(max{P,R,T,S}-min{P,R,T,S})] ) / 2
-                var Wi = this.getScoreUncond(this.cellMatrix[x][y].action, this.cellMatrix[this.selectedNeighbor[x][y][0]][this.selectedNeighbor[x][y][1]].action);
-                var Wj = this.getScoreUncond(this.cellMatrix[this.selectedNeighbor[x][y][0]][this.selectedNeighbor[x][y][1]].action, this.cellMatrix[x][y].action);
+                var Wi = this.cellMatrix[x][y].score;
+                var Wj = this.cellMatrix[this.selectedNeighbor[x][y][0]][this.selectedNeighbor[x][y][1]].score;
                 // Wj and Wi are respectively the scores obtained with the opponant
-                var Pij = (1 + [Wj -Wi]/[this.imitationMode*(this.getMaxPayoff()-this.getMinPayoff())])/2;
+                var Pij = (1 + (Wj-Wi)/(this.imitationMode*(this.getMaxPayoff()-this.getMinPayoff())))/2;
                 if(Math.random() <= Pij){
                     // la probabilité est comprise dans l'intervalle, l'action est "copiée"
                     temp = this.cellMatrix[this.selectedNeighbor[x][y][0]][this.selectedNeighbor[x][y][1]].action;
                 } else {// sinon, la même qu'avant
-                    temp = this.cellMatrix[x][y];
+                    temp = this.cellMatrix[y][x].action;
                 }
-                if(temp == COOPSTATE){
+                // TODO add a new color in the case of changing and so on (like in first paper)
+                if(temp === COOPSTATE){
                     this.nbCoops++;
                 } else {
                     this.nbDefect++;
@@ -340,7 +340,7 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
             }
         }
     } else { // vn mode
-        // choisir au hasard parmi les meilleures, sinon model non random... faux.
+        // choisir au hasard parmi les meilleurs, sinon model non random... faux.
 
         var toTest = [];
         toTest.push([this.cellMatrix[x][y].score, this.cellMatrix[x][y].action]);
@@ -355,7 +355,7 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
                 array_result = [];
                 array_result.push(toTest[i][1]); // push the action
                 maxi = toTest[i][0];
-            } else if (toTest[i][0] == maxi){
+            } else if (toTest[i][0] === maxi){
                 array_result.push(toTest[i][1]);
             }
         }
@@ -366,16 +366,6 @@ Grid.prototype.getBestNeighborAction = function (x, y) {
     action = array_result[Math.floor(Math.random()*array_result.length)];
     // console.log(("action choice :" + action));
     return action;
-};
-
-Grid.prototype.compareNeibVN = function (score1, score2, action1, action2) {
-    "use strict";
-
-    if(score1 > score2){
-        return [score1, action1];
-    } else {
-        return [score2, action2];
-    }
 };
 
 Grid.prototype.printMatrix = function () {
@@ -394,23 +384,6 @@ Grid.prototype.printMatrix = function () {
     }
 };
 
-Grid.prototype.printScores = function () {
-    "use strict";
-
-    var x;
-    var y;
-    var line;
-    var nb;
-
-    for (y = 0; y < this.getNbRows(); ++y) {
-        line = (y < 10 ? " " : "") + y + "|";
-        for (x = 0; x < this.getNbCols(); ++x) {
-            line += (this.cellMatrix[x][y].score + "-");
-        }
-        console.log(line);
-    }
-};
-
 
 Grid.prototype.setDim = function (nbCols, nbRows) {
     "use strict";
@@ -418,6 +391,7 @@ Grid.prototype.setDim = function (nbCols, nbRows) {
     this.nbCols = nbCols;
     this.nbRows = nbRows;
     this.initMatrix(nbCols, nbRows);
+    this.selectedNeighbor = this.generateMatrix(this.nbCols, this.nbRows);
 };
 
 Grid.prototype.setMode = function (newMode) {
