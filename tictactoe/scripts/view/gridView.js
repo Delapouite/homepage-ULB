@@ -54,7 +54,7 @@ function GridView(tictactoe, gridModel) {
     }
 
 
-    this.cellSize = 40;
+    this.cellSize = 50;
 
     this.gridModel = gridModel;
     this.canvas = createCanvasElement(this);
@@ -63,16 +63,31 @@ function GridView(tictactoe, gridModel) {
 GridView.prototype.drawAll = function () {
     "use strict";
 
-    var ctx = this.getContext();
+    console.log("GridView::drawAll, nbrows = ", NB_ROWS);
     var x;
     var y;
 
-    for (y = 0; y < this.gridModel.NB_ROWS; ++y) {
-        for (x = 0; x < this.gridModel.NB_COLS; ++x) {
-            this.drawOne(x, y, ctx);
+    for (x = 0; x < NB_ROWS; ++x) {
+        for (y = 0; y < NB_COLS; ++y) {
+            this.drawOne(x, y);
         }
     }
 };
+
+GridView.prototype.drawOne = function (x, y) {
+    "use strict";
+
+    console.assert(Number.isInteger(x), x);
+    console.assert(Number.isInteger(y), y);
+    console.assert((0 <= x) && (x < NB_COLS), x);
+    console.assert((0 <= y) && (y < NB_ROWS), y);
+
+    var ctx = this.getContext();
+
+    ctx.strokeRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+};
+
+
 
 GridView.prototype.getContext = function () {
     "use strict";

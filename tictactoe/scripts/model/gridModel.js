@@ -3,12 +3,12 @@
  */
 
 function Grid() {
-    
-}
 
+}
 
 var NB_COLS = 3;
 var NB_ROWS = 3;
+
 
 
 Grid.prototype.coordsToKey = function (x, y) {
