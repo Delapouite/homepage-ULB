@@ -7,8 +7,13 @@
 function GridController(model, view) {
     "use strict";
 
+    console.assert(typeof (model) == Game);
+    console.assert(typeof (view) == GridView);
+
     this.model = model;
     this.view = view;
+
+    console.log("GridController created");
 }
 
 
