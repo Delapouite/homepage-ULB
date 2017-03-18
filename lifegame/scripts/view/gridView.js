@@ -6,13 +6,13 @@ function GridView(gameOfLife, gridModel, nbCols, nbRows) {
     "use strict";
 
     function createCanvasElement(gridView) {
-        // TODO retirer les assert avant mise en "prod"
+
         console.assert(gridView instanceof GridView, gridView);
 
         var canvas = document.createElement("canvas");
 
-        canvas.setAttribute("width", nbCols * gridView.cellSize);
-        canvas.setAttribute("height", nbRows * gridView.cellSize);
+        canvas.setAttribute("width", nbCols * CELL_SIZE);
+        canvas.setAttribute("height", nbRows * CELL_SIZE);
         canvas.addEventListener("click",
             function (event) {
                 reverseCell(gridView, event);
