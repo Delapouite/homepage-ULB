@@ -16,27 +16,37 @@ class Game {
         console.assert(playerO != null);
 
         this.board = new Array(NB_CELLS);
-        this.board.fill(" ");
-        // this.board is [" ",*9]
+        this.board.fill(" ");  // this.board is [" ",*9]
 
         this.playerX = playerX;
         this.playerO = playerO;
 
-        this.playerX_turn = this.whosTurn();
+        this.playerX_turn = Game.whosTurn();
 
         if(this.playerX_turn){
             console.log("X starts to play");
         } else {
             console.log("O starts to play");
         }
-        this.playerX.available_moves(this.board);
-        this.playerO.available_moves(this.board);
+
     }
 
+    printMatrix () {
+        for(var i = 0; i < NB_LINES; i++){
+            var result = "-----------\n";
+            result += "|";
+            for (var j = 0; j < NB_LINES; j++){
+                result += this.board[i*NB_LINES+j] + " |";
+            }
+            console.log(result);
+        }
+        console.log("-----------\n");
+    }
 
-    whosTurn () {
+    static whosTurn () {
         return Math.random() < 0.5 ? true : false;
     }
+
 }
 
 

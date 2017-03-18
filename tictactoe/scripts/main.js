@@ -10,15 +10,17 @@
     var ticTacToe;
 
 
-    function CreateGameOfTicTacToe() {
-        var player1 = new Player();
-        var player2 = new Player();
+    class CreateGameOfTicTacToe {
+        constructor(){
+            var player1 = new Player();
+            var player2 = new Player();
 
-        var model = new Game(player1, player2);
-        var view = new GridView(model);
+            var model = new Game(player1, player2);
+            var view = new GridView(model);
 
-        // this.controller = new GridController(model, view);
-        console.log("Create Game TicTacToe ok");
+            this.controller = new GridController(model, view);
+            console.log("Create Game TicTacToe ok");
+        }
     }
 
     function setListeners() {
@@ -37,9 +39,9 @@
     window.addEventListener("load",
         function () {
             ticTacToe = new CreateGameOfTicTacToe();
-            // ticTacToe.controller.update();
+            ticTacToe.controller.update();
 
-            // setListeners();
+            setListeners();
         },
         false);
 }());

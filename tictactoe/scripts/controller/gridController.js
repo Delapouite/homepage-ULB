@@ -3,23 +3,25 @@
  */
 
 
+"use strict";
 
-function GridController(model, view) {
-    "use strict";
+class GridController{
+    constructor(model, view) {
+        console.assert(typeof (model) == "object");
+        console.assert(typeof (view) == "object");
 
-    console.assert(typeof (model) == Game);
-    console.assert(typeof (view) == GridView);
+        this.model = model;
+        this.view = view;
 
-    this.model = model;
-    this.view = view;
+        console.log("GridController created");
+    }
 
-    console.log("GridController created");
+    update () {
+        this.view.drawAll(); // update the whole view of the grid.
+    }
+
 }
 
 
 
-GridController.prototype.update = function () {
-    "use strict";
 
-    this.view.drawAll(); // update the whole view of the grid.
-};

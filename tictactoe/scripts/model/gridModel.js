@@ -2,8 +2,8 @@
  * Created by Arabella Brayer on 20/02/17.
  */
 
+"use strict";
 function Grid() {
-    "use strict";
 
 }
 
@@ -20,4 +20,20 @@ Grid.prototype.coordsToKey = function (x, y) {
     console.assert((0 <= y) && (y < this.NB_CELLS / this.NB_LINES, y));
 
     return x + "," + y;
+};
+
+Grid.prototype.printMatrix = function () {
+    "use strict";
+
+    var x;
+    var y;
+    var line;
+
+    for (y = 0; y < this.getNbRows(); ++y) {
+        line = (y < 10 ? " " : "") + y + "|";
+        for (x = 0; x < this.getNbCols(); ++x) {
+            line += (this.isAlive(x, y) ? "x" : ".");
+        }
+        console.log(line);
+    }
 };
