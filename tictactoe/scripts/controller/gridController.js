@@ -2,7 +2,6 @@
  * Created by Arabella Brayer on 20/02/17.
  */
 
-
 "use strict";
 
 class GridController{
@@ -16,9 +15,15 @@ class GridController{
         console.log("GridController created");
     }
 
+    play_one_turn() {
+        this.model.playOneTurn();
+    }
+
     update () {
         this.view.drawAll(); // update the whole view of the grid.
     }
+
+
 
 }
 

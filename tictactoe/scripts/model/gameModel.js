@@ -21,14 +21,16 @@ class Game {
         this.playerX = playerX;
         this.playerO = playerO;
 
-        this.playerX_turn = Game.whosTurn();
+        this.playerX_turn = Game.randomWhosTurn();
 
-        if(this.playerX_turn){
-            console.log("X starts to play");
-        } else {
-            console.log("O starts to play");
+        if (!Game.isFinished(this.board)) {
+            if (this.playerX_turn) {
+                console.log("X starts to play");
+            } else {
+                console.log("O starts to play");
+                this.board[this.playerO.play(this.board)] = this.playerO.char; // IA can start
+            }
         }
-
     }
 
     printMatrix () {
@@ -43,8 +45,20 @@ class Game {
         console.log("-----------\n");
     }
 
-    static whosTurn () {
+    playOneTurn () {
+        if(this.playerX_turn){
+            return; // humain don't play automatically
+        } else {
+            this.playerO.play(this.board);
+        }
+    }
+
+    static randomWhosTurn () {
         return Math.random() < 0.5 ? true : false;
+    }
+
+    static isFinished(board){
+        return false;
     }
 
 }

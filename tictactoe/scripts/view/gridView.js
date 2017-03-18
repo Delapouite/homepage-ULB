@@ -12,11 +12,11 @@ class GridView {
     constructor(gridModel) {
 
         this.gridModel = gridModel;
-        this.canvas = this.createCanvasElement(this);
+        this.canvas = this.createCanvasElement(this, this.gridModel);
 
     }
 
-    createCanvasElement(gridView) {
+    createCanvasElement(gridView, model) {
         console.assert(gridView instanceof GridView, gridView);
 
         var canvas = document.createElement("canvas");
@@ -25,7 +25,7 @@ class GridView {
         canvas.setAttribute("height", 3 * CELL_SIZE);
         canvas.addEventListener("click",
             function (event) {
-                playWithThisCell(gridView, event);
+                playWithThisCell(gridView, model, event);
             },
             false);
 
@@ -56,6 +56,24 @@ class GridView {
         var ctx = this.getContext();
 
         ctx.strokeRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        if(this.gridModel.board[y * 3 + x + 1] === "X"){
+            ctx.beginPath();
+
+            ctx.moveTo(x - 20, y - 20);
+            ctx.lineTo(x + 20, y + 20);
+
+            ctx.moveTo(x + 20, y - 20);
+            ctx.lineTo(x - 20, y + 20);
+            ctx.stroke();
+        } else if (this.gridModel.board[y * 3 + x + 1] === "O"){
+            //draw a circle
+            ctx.beginPath();
+            ctx.arc(x + CELL_SIZE/2, y + CELL_SIZE/2, 10, 0, Math.PI*2, true);
+            ctx.closePath();
+            ctx.stroke();
+        } else {
+            console.log("x:y :" + x +", " + y + " -> " + (x * 3 + y) + this.gridModel.board[x * 3 + y] + (this.gridModel.board[x * 3 + y] == " "));
+        }
     }
 
     getContext () {
@@ -64,10 +82,14 @@ class GridView {
 
 }
 
-
-function playWithThisCell(gridView, event) {
+function playWithThisCell(gridView, model, event) {
     console.assert(gridView instanceof GridView, gridView);
     console.assert(event instanceof Event, event);
+
+    // if(!model.playerX_turn){
+    //     console.log("It is not your turn !!");
+    //     return;
+    // }
 
     var x;
     var y;
@@ -83,10 +105,11 @@ function playWithThisCell(gridView, event) {
         y = event.clientY - rect.top;
     }
 
-        x = Math.floor(x/CELL_SIZE);
-        y = Math.floor(y/CELL_SIZE);
+    x = Math.floor(x/CELL_SIZE);
+    y = Math.floor(y/CELL_SIZE);
 
-        console.log("x : ", x, ", y : ", y);
-        console.log("cell nb : ", y * 3 + x + 1);
-        return y * 3 + x + 1;
+    console.log("x : ", x, ", y : ", y);
+    console.log("cell nb : ", y * 3 + x + 1);
+    return y * 3 + x + 1;
 }
+
