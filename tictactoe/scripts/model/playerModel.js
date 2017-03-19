@@ -55,7 +55,7 @@ class Player {
      * Function that make the player do a choice.
      *
      * @param board current game
-     * @returns {number} piece to play with
+     * @param cell the numer of the cell that the player wants to play
      */
     play(board, cell){
         let available_moves = Game.available_moves(board);
