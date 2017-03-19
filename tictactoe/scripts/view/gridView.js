@@ -5,7 +5,12 @@
 "use strict";
 
 
-var CELL_SIZE = 50;
+const CELL_SIZE = 50;
+const WIDTH_CIRCLE = 5;
+const WIDTH_NORMAL = 1;
+const COLOR_O = 'red';
+const COLOR_X = 'blue';
+const COLOR_NORMAL = 'black';
 
 class GridView {
 
@@ -19,7 +24,7 @@ class GridView {
     createCanvasElement(gridView, model) {
         console.assert(gridView instanceof GridView, gridView);
 
-        var canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
 
         canvas.setAttribute("width", 3 * CELL_SIZE);
         canvas.setAttribute("height", 3 * CELL_SIZE);
@@ -36,8 +41,8 @@ class GridView {
 
     drawAll () {
 
-        var i;
-        var j;
+        let i;
+        let j;
 
         for (i = 0; i < NB_LINES; ++i) {
             for (j = 0; j < NB_LINES; ++j) {
@@ -53,10 +58,10 @@ class GridView {
         console.assert((0 <= x) && (x < NB_LINES), x);
         console.assert((0 <= y) && (y < NB_LINES), y);
 
-        var ctx = this.getContext();
+        let ctx = this.getContext();
 
         ctx.strokeRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-        if(this.gridModel.board[y * 3 + x + 1] === "X"){
+        if(this.gridModel.board[y * 3 + x] === "X"){
             ctx.beginPath();
 
             ctx.moveTo(x - 20, y - 20);
@@ -65,19 +70,36 @@ class GridView {
             ctx.moveTo(x + 20, y - 20);
             ctx.lineTo(x - 20, y + 20);
             ctx.stroke();
-        } else if (this.gridModel.board[y * 3 + x + 1] === "O"){
+        } else if (this.gridModel.board[y * 3 + x] === "O") {
             //draw a circle
             ctx.beginPath();
-            ctx.arc(x + CELL_SIZE/2, y + CELL_SIZE/2, 10, 0, Math.PI*2, true);
+            ctx.arc(x * CELL_SIZE + 0.5 * CELL_SIZE, y * CELL_SIZE + 0.5 * CELL_SIZE, CELL_SIZE/3, 0, Math.PI * 2, true);
+            ctx.lineWidth = WIDTH_CIRCLE;
+            ctx.strokeStyle = COLOR_O;
             ctx.closePath();
             ctx.stroke();
-        } else {
-            console.log("x:y :" + x +", " + y + " -> " + (x * 3 + y) + this.gridModel.board[x * 3 + y] + (this.gridModel.board[x * 3 + y] == " "));
+            ctx.lineWidth = WIDTH_NORMAL;
+            ctx.strokeStyle = COLOR_NORMAL;
         }
+        // } else {
+        //     console.log("x:y :" + x +", " + y + " -> " + (x * 3 + y) + this.gridModel.board[x * 3 + y] + " " + (this.gridModel.board[x * 3 + y] == " "));
+        // }
     }
 
     getContext () {
         return this.canvas.getContext("2d");
+    }
+
+    updateWhosTurn () {
+
+        let txt = "Player ";
+        if(this.gridModel.playerX_turn){
+            txt += this.gridModel.playerX.char + " ";
+        } else {
+            txt += this.gridModel.playerO.char + " ";
+        }
+        document.getElementById("currentPlayer").innerHTML = txt + "is now playing";
+
     }
 
 }
@@ -91,8 +113,8 @@ function playWithThisCell(gridView, model, event) {
     //     return;
     // }
 
-    var x;
-    var y;
+    let x;
+    let y;
 
     if (event.x !== undefined && event.y !== undefined) {
         console.log("pas ff method"); // non testé sous IE/Edge etc.
@@ -100,7 +122,7 @@ function playWithThisCell(gridView, model, event) {
         y = event.y - canvas.offsetTop;
     } else { // ff method
         console.log("ff method");
-        var rect = gridView.canvas.getBoundingClientRect();
+        let rect = gridView.canvas.getBoundingClientRect();
         x = event.clientX - rect.left;
         y = event.clientY - rect.top;
     }

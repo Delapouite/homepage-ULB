@@ -21,6 +21,7 @@ class GridController{
 
     update () {
         this.view.drawAll(); // update the whole view of the grid.
+        this.view.updateWhosTurn(); // update the name of the current player etc.
     }
 
 

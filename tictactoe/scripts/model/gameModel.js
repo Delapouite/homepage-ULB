@@ -34,10 +34,10 @@ class Game {
     }
 
     printMatrix () {
-        for(var i = 0; i < NB_LINES; i++){
-            var result = "-----------\n";
+        for(let i = 0; i < NB_LINES; i++){
+            let result = "-----------\n";
             result += "|";
-            for (var j = 0; j < NB_LINES; j++){
+            for (let j = 0; j < NB_LINES; j++){
                 result += this.board[i*NB_LINES+j] + " |";
             }
             console.log(result);
@@ -46,15 +46,13 @@ class Game {
     }
 
     playOneTurn () {
-        if(this.playerX_turn){
-            return; // humain don't play automatically
-        } else {
+        if(!this.playerX_turn){
             this.playerO.play(this.board);
         }
     }
 
     static randomWhosTurn () {
-        return Math.random() < 0.5 ? true : false;
+        return Math.random() < 0.5;
     }
 
     static isFinished(board){
