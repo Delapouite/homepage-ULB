@@ -4,6 +4,8 @@
 
 var NB_CELLS = 9; // nb of cell to fill.
 var NB_LINES = 3;
+var WINNINGS = [[0,1,2], [0,3,6], [0,4, 8], [1, 4, 7], [2, 5, 8], [2, 4, 6], [3, 4, 5],
+    [6, 7, 8]];
 "use strict";
 
 
@@ -52,7 +54,7 @@ class Game {
 
     playThisCell(x) {
         // TODO add a lot of checks !!
-        if(this.playerX_turn){
+        if(!this.hasWon() && !this.isFinished() && this.playerX_turn){
             this.board[x] = this.playerX.char;
         }
     }
@@ -61,8 +63,25 @@ class Game {
         return Math.random() < 0.5;
     }
 
-    // TODO implement !!!
-    static isFinished(board){
+    isFinished(){
+        let i = 0;
+        while (i < this.board.length){
+            if(this.board[i] === ' '){
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+
+    hasWon(){
+        let key;
+        let currentPlayer = this.playerX_turn ? this.playerX : this.playerO;
+        for (key in WINNINGS){
+            if (this.board[key[0]] === currentPlayer.char && this.board[key[1]] === currentPlayer.char && this.board[key[2]] === currentPlayer.char){
+                return true;
+            }
+        }
         return false;
     }
 
