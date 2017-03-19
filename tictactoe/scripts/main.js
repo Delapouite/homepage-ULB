@@ -7,21 +7,23 @@
 (function () {
     "use strict";
 
-    var ticTacToe;
+    let ticTacToe;
     /* var of the game */
 
     class CreateGameOfTicTacToe {
         constructor(mode = "random"){
             console.log("mode = " + mode);
-            var player1 = new Player('X');
+            let player1 = new Player('X');
+            let player2;
             if(mode === "random"){
-                var player2 = new RandomPlayer('O');
+                player2 = new RandomPlayer('O');
             }
 
-            var model = new Game(player1, player2);
-            var view = new GridView(model);
+            let model = new Game(player1, player2);
+            let view = new GridView(model);
 
             this.controller = new GridController(model, view);
+            view.createCanvasElement(this.controller);
             console.log("Create Game TicTacToe ok");
         }
     }
@@ -42,7 +44,7 @@
     window.addEventListener("load",
         function () {
             ticTacToe = new CreateGameOfTicTacToe();
-            ticTacToe.controller.play_one_turn();
+            ticTacToe.controller.playOneTurnRandomly();
             ticTacToe.controller.update();
 
             setListeners();

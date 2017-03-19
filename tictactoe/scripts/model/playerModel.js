@@ -99,7 +99,7 @@ class RandomPlayer extends Player {
         this.type = "random";
     }
 
-    play(board){
+    play(board, cell){
         let available_moves = Player.available_moves(board);
         let coup = Math.floor(Math.random() * available_moves.length);
         console.log("coup = " + coup);

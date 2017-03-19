@@ -16,27 +16,25 @@ class GridView {
 
     constructor(gridModel) {
 
-        this.gridModel = gridModel;
-        this.canvas = this.createCanvasElement(this, this.gridModel);
+        console.assert(gridModel instanceof Game, gridModel);
 
+        this.gridModel = gridModel;
     }
 
-    createCanvasElement(gridView, model) {
-        console.assert(gridView instanceof GridView, gridView);
+    createCanvasElement(controller) {
+        console.assert(controller instanceof GridController, controller);
 
-        let canvas = document.createElement("canvas");
-
-        canvas.setAttribute("width", 3 * CELL_SIZE);
-        canvas.setAttribute("height", 3 * CELL_SIZE);
-        canvas.addEventListener("click",
+        this.canvas = document.createElement("canvas");
+        let view = this; // because function event does not know this... Must initialize a variable.
+        this.canvas.setAttribute("width", 3 * CELL_SIZE);
+        this.canvas.setAttribute("height", 3 * CELL_SIZE);
+        this.canvas.addEventListener("click",
             function (event) {
-                playWithThisCell(gridView, model, event);
+                playWithThisCell(view, controller, event);
             },
             false);
 
-        document.getElementById("canvas").appendChild(canvas);
-        return canvas;
-
+        document.getElementById("canvas").appendChild(this.canvas);
     }
 
     drawAll () {
@@ -104,22 +102,23 @@ class GridView {
 
 }
 
-function playWithThisCell(gridView, model, event) {
+function playWithThisCell(gridView, controller, event) {
     console.assert(gridView instanceof GridView, gridView);
+    console.assert(controller instanceof GridController, controller);
     console.assert(event instanceof Event, event);
 
-    // if(!model.playerX_turn){
-    //     console.log("It is not your turn !!");
-    //     return;
-    // }
+    if(!controller.model.playerX_turn){
+        console.log("It is not your turn !!");
+        return;
+    }
 
     let x;
     let y;
 
     if (event.x !== undefined && event.y !== undefined) {
         console.log("pas ff method"); // non testé sous IE/Edge etc.
-        x = event.x - canvas.offsetLeft;
-        y = event.y - canvas.offsetTop;
+        x = event.x - gridView.canvas.offsetLeft;
+        y = event.y - gridView.canvas.offsetTop;
     } else { // ff method
         console.log("ff method");
         let rect = gridView.canvas.getBoundingClientRect();
@@ -131,7 +130,7 @@ function playWithThisCell(gridView, model, event) {
     y = Math.floor(y/CELL_SIZE);
 
     console.log("x : ", x, ", y : ", y);
-    console.log("cell nb : ", y * 3 + x + 1);
-    return y * 3 + x + 1;
+    console.log("cell nb : ", y * 3 + x);
+    controller.playThisCell(y * 3 + x);
 }
 

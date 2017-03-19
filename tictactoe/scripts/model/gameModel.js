@@ -23,14 +23,13 @@ class Game {
 
         this.playerX_turn = Game.randomWhosTurn();
 
-        if (!Game.isFinished(this.board)) {
-            if (this.playerX_turn) {
-                console.log("X starts to play");
-            } else {
-                console.log("O starts to play");
-                this.board[this.playerO.play(this.board)] = this.playerO.char; // IA can start
-            }
+        if (this.playerX_turn) {
+            console.log("X starts to play");
+        } else {
+            console.log("O starts to play");
         }
+
+
     }
 
     printMatrix () {
@@ -45,9 +44,16 @@ class Game {
         console.log("-----------\n");
     }
 
-    playOneTurn () {
+    playOneTurnRandomly () {
         if(!this.playerX_turn){
-            this.playerO.play(this.board);
+            this.board[this.playerO.play(this.board)] = this.playerO.char; // IA can start
+        }
+    }
+
+    playThisCell(x) {
+        // TODO add a lot of checks !!
+        if(this.playerX_turn){
+            this.board[x] = this.playerX.char;
         }
     }
 
@@ -55,6 +61,7 @@ class Game {
         return Math.random() < 0.5;
     }
 
+    // TODO implement !!!
     static isFinished(board){
         return false;
     }
