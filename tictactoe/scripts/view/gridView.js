@@ -62,16 +62,21 @@ class GridView {
         if(this.gridModel.board[y * 3 + x] === "X"){
             ctx.beginPath();
 
-            ctx.moveTo(x - 20, y - 20);
-            ctx.lineTo(x + 20, y + 20);
+            ctx.lineWidth = WIDTH_CIRCLE;
+            ctx.strokeStyle = COLOR_X;
 
-            ctx.moveTo(x + 20, y - 20);
-            ctx.lineTo(x - 20, y + 20);
+            ctx.moveTo((x + 0.5) * CELL_SIZE - 20, (y + 0.5) * CELL_SIZE - 20);
+            ctx.lineTo((x + 0.5) * CELL_SIZE + 20, (y + 0.5) * CELL_SIZE + 20);
+
+            ctx.moveTo((x + 0.5) * CELL_SIZE + 20, (y + 0.5) * CELL_SIZE - 20);
+            ctx.lineTo((x + 0.5) * CELL_SIZE - 20, (y + 0.5) * CELL_SIZE + 20);
             ctx.stroke();
+            ctx.lineWidth = WIDTH_NORMAL;
+            ctx.strokeStyle = COLOR_NORMAL;
         } else if (this.gridModel.board[y * 3 + x] === "O") {
             //draw a circle
             ctx.beginPath();
-            ctx.arc(x * CELL_SIZE + 0.5 * CELL_SIZE, y * CELL_SIZE + 0.5 * CELL_SIZE, CELL_SIZE/3, 0, Math.PI * 2, true);
+            ctx.arc((x + 0.5) * CELL_SIZE, (y + 0.5) * CELL_SIZE, CELL_SIZE/3, 0, Math.PI * 2, true);
             ctx.lineWidth = WIDTH_CIRCLE;
             ctx.strokeStyle = COLOR_O;
             ctx.closePath();

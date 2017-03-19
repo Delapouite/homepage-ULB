@@ -85,6 +85,25 @@ class Game {
         return false;
     }
 
+    /**
+     * Returns the left cells to play.
+     *
+     * @param board : the current array that represents the current game
+     * @return {Array} the free cells left in an array
+     */
+    static available_moves(board){
+
+        console.assert(board instanceof Array, board);
+
+        let result = new Array();
+        for (let i = 0; i < NB_CELLS; i++) {
+            if(board[i] === ' '){
+                result.push(i);
+            }
+        }
+        // console.log("Game::available_moves");
+        return result;
+    }
 }
 
 

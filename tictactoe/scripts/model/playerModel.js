@@ -58,34 +58,13 @@ class Player {
      * @returns {number} piece to play with
      */
     play(board, cell){
-        let available_moves = Player.available_moves(board);
+        let available_moves = Game.available_moves(board);
         if(cell in available_moves){
             console.log("ok you can play this");
             board[cell] = this.char;
         }
     }
 
-    /**
-     * Returns the left cells to play.
-     *
-     * @param board : the current array that represents the current game
-     * @return {Array} the free cells left in an array
-     */
-    static available_moves(board) {
-
-        console.assert(typeof (board) ==  "object");
-
-        let result = new Array();
-        for(let i = 0; i < board.length; i++){
-            result.push(i+1);
-        }
-        //
-        // for(var i = 0; i < result.length; i++){
-        //     console.log(result[i]);
-        // }
-        console.log("Player::available_moves");
-        return result;
-    }
 }
 
 
@@ -100,10 +79,9 @@ class RandomPlayer extends Player {
     }
 
     play(board, cell){
-        let available_moves = Player.available_moves(board);
+        let available_moves = Game.available_moves(board);
         let coup = Math.floor(Math.random() * available_moves.length);
-        console.log("coup = " + coup);
-        return coup;
+        return available_moves[coup];
     }
 
 }

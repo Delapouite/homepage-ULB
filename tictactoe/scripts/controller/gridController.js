@@ -17,14 +17,24 @@ class GridController{
 
     playOneTurnRandomly() {
         this.model.playOneTurnRandomly();
-        this.model.playerX_turn = true;
+        if(this.model.hasWon()){
+            console.log("IA win !!");
+        } else {
+            this.model.playerX_turn = true;
+        }
         this.update();
+
     }
 
     playThisCell(x) {
         this.model.playThisCell(x);
         this.model.playerX_turn = false;
         this.update();
+        if(this.model.hasWon()){
+            console.log("You win !!");
+        } else {
+            this.playOneTurnRandomly();
+        }
     }
 
     update () {
