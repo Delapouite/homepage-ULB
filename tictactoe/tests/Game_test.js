@@ -63,5 +63,26 @@ describe("The name validator", function () {
 
     });
 
+    describe("Checks if a player has won or not", function () {
+
+        it("should be false if board is empty", function () {
+            let playerOne = new Player("X");
+            let playerTwo = new Player("O");
+            let game = new Game(playerOne, playerTwo);
+            game.playerX_turn = true; // enforce the turn to avoid random
+            expect(game.hasWon()).toBe(false);
+        });
+
+        it("should be true if the forst line is full of X", function () {
+            let playerOne = new Player("X");
+            let playerTwo = new Player("O");
+            let game = new Game(playerOne, playerTwo);
+            game.playerX_turn = true; // enforce the turn to avoid random
+            game.board[0] = game.board[1] = game.board[2] = "X";
+            expect(game.hasWon()).toBe(true);
+        });
+
+    });
+
 
 });

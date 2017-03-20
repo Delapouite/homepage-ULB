@@ -75,10 +75,13 @@ class Game {
     }
 
     hasWon(){
-        let key;
+        let i;
         let currentPlayer = this.playerX_turn ? this.playerX : this.playerO;
-        for (key in WINNINGS){
-            if (this.board[key[0]] === currentPlayer.char && this.board[key[1]] === currentPlayer.char && this.board[key[2]] === currentPlayer.char){
+        for (i = 0; i < WINNINGS.length; i++){
+            let cells_are_equals = this.board[WINNINGS[i][0]] === this.board[WINNINGS[i][1]];
+            cells_are_equals &= this.board[WINNINGS[i][1]] === this.board[WINNINGS[i][2]];
+            let cells_are_not_empty = (this.board[WINNINGS[i][0]] != " ");
+            if (cells_are_equals && cells_are_not_empty){
                 return true;
             }
         }
